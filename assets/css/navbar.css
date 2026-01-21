@@ -1,0 +1,127 @@
+/* ================= MOBILE FIXED NAVBAR ================= */
+@media (max-width: 991px) {
+
+    /* Fixed navbar height */
+    body {
+      padding-top: 64px;
+    }
+  
+    .editorial-nav {
+      padding: 0.5rem 0;
+      background: #FAF8F5;
+    }
+  
+    /* Mobile collapse container */
+    .editorial-nav .navbar-collapse {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+  
+      background: #FAF8F5;
+      padding: 1.5rem 1rem 2rem;
+      border-top: 1px solid #E6E3DD;
+  
+      box-shadow: 0 20px 40px rgba(0,0,0,.08);
+    }
+  
+    /* Nav list */
+    .editorial-nav .navbar-nav {
+      gap: 1rem;
+    }
+  
+    /* Center links like screenshot */
+    .editorial-nav .nav-link {
+      text-align: center;
+      font-size: 1rem;
+      padding: 0.5rem 0;
+    }
+  
+    /* Disable underline animation on mobile */
+    .editorial-nav .nav-link::after {
+      display: none;
+    }
+  
+    /* Auth buttons container */
+    .nav-actions {
+      margin-top: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      align-items: center;
+    }
+  
+    /* Buttons exactly like screenshot */
+    .btn-auth {
+      width: 90%;
+      max-width: 320px;
+      padding: 0.65rem 1rem;
+      border-radius: 999px;
+      font-weight: 600;
+    }
+  }
+ /* ================= DESKTOP NAVBAR (FIXED PROPERLY) ================= */
+@media (min-width: 992px) {
+
+    /* Restore Bootstrap default behavior */
+    .editorial-nav .navbar-collapse {
+      position: static;
+      display: flex !important;
+      flex-basis: auto;
+      background: transparent;
+      padding: 0;
+      box-shadow: none;
+    }
+  
+    .editorial-nav .navbar-nav {
+      flex-direction: row;
+      gap: 1.5rem;
+      align-items: center;
+    }
+  
+    .nav-actions {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0;
+    }
+  
+    .btn-auth {
+      width: auto;
+      max-width: none;
+      padding: 6px 16px;
+    }
+  }
+  /* ================= DESKTOP NAVBAR RESTORE ================= */
+@media (min-width: 992px) {
+
+  .editorial-nav .navbar-collapse {
+    position: static !important;     /* undo absolute */
+    display: flex !important;        /* restore flex */
+    flex-basis: auto;
+    align-items: center;
+    width: auto;
+    background: transparent;
+    padding: 0;
+    box-shadow: none;
+  }
+
+  .editorial-nav .navbar-nav {
+    flex-direction: row;
+    align-items: center;
+    margin-top: 0;
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    margin-top: 0;
+  }
+
+  .btn-auth {
+    width: auto;
+    max-width: none;
+    padding: 6px 16px;
+  }
+}
