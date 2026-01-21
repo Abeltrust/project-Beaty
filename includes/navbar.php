@@ -10,7 +10,7 @@ if (session_status() === PHP_SESSION_NONE) {
   
       <!-- Brand -->
       <a class="navbar-brand" href="#">
-        Beauty Multi-Service
+        BMS
       </a>
   
       <!-- Toggler -->

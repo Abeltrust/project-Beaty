@@ -206,25 +206,38 @@
   margin-bottom: 2rem;
 }
 
-.pill {
-  background: white;
-  padding: .6rem 1.1rem;
-  border-radius: 999px;
+/* ================= FEATURE STRIP ================= */
+.feature-strip {
+  padding: 3rem 0;
+}
+
+.feature-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 1.4rem 1rem;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,.06);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.feature-card i {
+  font-size: 1.6rem;
+  color: #c79a3d;
+  margin-bottom: .4rem;
+  display: block;
+}
+
+.feature-card span {
   font-size: .9rem;
-  display: flex;
-  align-items: center;
-  gap: .4rem;
- 
-  box-shadow: 0 10px 30px rgba(0,0,0,.08);
+  font-weight: 500;
+  color: #555;
 }
-.hero-text {
-  max-width: 540px;
-  color: #6B7280;
-  font-size: 1.05rem;
+
+.feature-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(0,0,0,.08);
 }
-.pill i {
-  color:#000000;
-}
+
 
 #loader {
   position: fixed;

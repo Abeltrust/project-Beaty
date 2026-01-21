@@ -42,9 +42,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $_SESSION['role'] = $user['role'];
 
                 if ($_SESSION['role'] === 'admin') {
-                  header("Location: /admin/dashboard.php");
+                  header("Location: ../admin/dashboard.php");
                 } else {
-                  header("Location: /products.php");
+                  header("Location: /product.php");
                 }
 
             } else {

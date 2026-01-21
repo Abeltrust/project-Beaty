@@ -67,70 +67,122 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 $products = $pdo->query("SELECT * FROM products ORDER BY id DESC")->fetchAll();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Admin | Manage Products</title>
+  <title>Admin Dashboard | Beauty Multi-Service</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
+  <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light">
+  <link rel="stylesheet" href="../assets/css/navbar.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <!-- Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
 
-<div class="container py-5">
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      background: #F5F5F5;
+      font-family: 'Poppins', sans-serif;
+      padding-top: 90px;
+    }
+
+    .admin-container {
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .admin-title {
+      font-weight: 700;
+      margin-bottom: .3rem;
+    }
+
+    .admin-sub {
+      color: #666;
+      font-size: .95rem;
+      margin-bottom: 2rem;
+    }
+
+    .card-soft {
+      border: none;
+      border-radius: 18px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.06);
+    }
+
+    .form-control {
+      border-radius: 12px;
+      padding: .7rem 1rem;
+    }
+
+    .btn-brand {
+      background: #c79a3d;
+      border: none;
+      color: #000;
+      font-weight: 600;
+      border-radius: 30px;
+      padding: .7rem 2rem;
+    }
+
+    .btn-brand:hover {
+      background: #ddb55a;
+    }
+
+    .product-img {
+      height: 150px;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+
+    .badge-admin {
+      background: #eee;
+      color: #333;
+      font-size: .75rem;
+    }
+  </style>
+</head>
+<body>
+
+<?php include "../includes/navbar.php"; ?>
+
+<div class="admin-container container py-4">
 
   <!-- HEADER -->
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <div>
-      <h2 class="mb-0">Product Management</h2>
-      <small class="text-muted">Admin Control Panel</small>
-    </div>
-    <a href="dashboard.php" class="btn btn-outline-secondary">
-      ← Back to Dashboard
-    </a>
+  <div class="mb-4">
+    <h2 class="admin-title">Admin Dashboard</h2>
+    <p class="admin-sub">Manage products and store content</p>
   </div>
 
-  <!-- ALERTS -->
-  <?php if ($error): ?>
-    <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
-  <?php endif; ?>
-
-  <?php if ($success): ?>
-    <div class="alert alert-success"><?= htmlspecialchars($success) ?></div>
-  <?php endif; ?>
-
   <!-- ADD PRODUCT -->
-  <div class="card shadow-sm mb-5">
+  <div class="card card-soft mb-5">
     <div class="card-body">
-      <h5 class="mb-4">Add New Product</h5>
+      <h5 class="mb-3">Add New Product</h5>
 
-      <form method="post" enctype="multipart/form-data">
+      <form method="post" action="add-product.php" enctype="multipart/form-data">
         <div class="row g-3">
 
           <div class="col-md-6">
-            <label class="form-label">Product Name</label>
-            <input class="form-control" name="name" required>
+            <input class="form-control" name="name" placeholder="Product name" required>
           </div>
 
           <div class="col-md-6">
-            <label class="form-label">Price (₦)</label>
-            <input class="form-control" name="price" type="number" step="0.01" required>
+            <input class="form-control" name="price" type="number" step="0.01" placeholder="Price (₦)" required>
           </div>
 
           <div class="col-12">
-            <label class="form-label">Description</label>
-            <textarea class="form-control" name="description" rows="3"></textarea>
+            <textarea class="form-control" name="description" rows="3" placeholder="Product description"></textarea>
           </div>
 
           <div class="col-12">
-            <label class="form-label">Product Image</label>
             <input class="form-control" type="file" name="image" required>
-            <small class="text-muted">JPG, PNG, WEBP — max 2MB</small>
           </div>
 
-          <div class="col-12 text-end">
-            <button class="btn btn-dark px-4">
+          <div class="col-12">
+            <button class="btn btn-brand w-100">
               Add Product
             </button>
           </div>
@@ -140,21 +192,30 @@ $products = $pdo->query("SELECT * FROM products ORDER BY id DESC")->fetchAll();
     </div>
   </div>
 
-  <!-- PRODUCT LIST -->
+  <!-- PRODUCTS -->
   <h5 class="mb-3">Existing Products</h5>
 
   <div class="row g-4">
     <?php foreach ($products as $p): ?>
-      <div class="col-md-3">
-        <div class="card shadow-sm h-100">
+      <div class="col-12 col-md-3">
+        <div class="card card-soft h-100 p-3 text-center">
           <img
-            src="../assets/images/products/<?= htmlspecialchars($p['image']) ?>"
-            class="card-img-top"
-            style="height:160px;object-fit:cover"
+            src="../assets/storage/products/<?= htmlspecialchars($p['image']) ?>"
+            class="product-img mb-3"
           >
-          <div class="card-body text-center">
-            <h6 class="mb-1"><?= htmlspecialchars($p['name']) ?></h6>
-            <small class="text-muted">₦<?= number_format($p['price']) ?></small>
+
+          <h6 class="mb-1"><?= htmlspecialchars($p['name']) ?></h6>
+          <p class="text-muted small mb-2">₦<?= number_format($p['price']) ?></p>
+
+          <span class="badge badge-admin mb-2">ID #<?= $p['id'] ?></span>
+
+          <div class="d-flex gap-2 mt-2">
+            <a href="edit-product.php?id=<?= $p['id'] ?>" class="btn btn-outline-secondary btn-sm w-100">
+              Edit
+            </a>
+            <a href="delete-product.php?id=<?= $p['id'] ?>" class="btn btn-outline-danger btn-sm w-100">
+              Delete
+            </a>
           </div>
         </div>
       </div>
@@ -164,5 +225,4 @@ $products = $pdo->query("SELECT * FROM products ORDER BY id DESC")->fetchAll();
 </div>
 
 </body>
-
 </html>
