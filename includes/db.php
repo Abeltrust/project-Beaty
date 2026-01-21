@@ -16,3 +16,4 @@ try {
 }
 
 session_start();
+?>

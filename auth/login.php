@@ -41,8 +41,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['role'] = $user['role'];
 
-                header("Location: ../product.php");
-                exit;
+                if ($_SESSION['role'] === 'admin') {
+                  header("Location: /admin/dashboard.php");
+                } else {
+                  header("Location: /products.php");
+                }
 
             } else {
                 $error = "Invalid email or password.";
