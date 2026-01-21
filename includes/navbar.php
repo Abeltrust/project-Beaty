@@ -21,11 +21,11 @@ if (session_status() === PHP_SESSION_NONE) {
       <!-- Menu -->
       <div class="collapse navbar-collapse" id="editorialNav">
         <ul class="navbar-nav mx-auto gap-lg-4 text-center mt-4 mt-lg-0">
-          <li class="nav-item"><a class="nav-link" href="#products">Shop</a></li>
-          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+          <li class="nav-item"><a class="nav-link" href="Index.php">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="product.php">Shop</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.php">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.php">Contact</a></li>
         </ul>
-  
         <!-- Actions -->
         <div class="nav-actions d-flex flex-column flex-lg-row gap-2 mt-4 mt-lg-0">
         <?php if (isset($_SESSION['user_id'])): ?>

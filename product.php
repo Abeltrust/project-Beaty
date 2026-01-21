@@ -149,7 +149,12 @@ body {
       <div class="collapse navbar-collapse" id="editorialNav">
         <ul class="navbar-nav mx-auto gap-lg-4 text-center mt-4 mt-lg-0">
         <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="cart.php">Cart</a></li>
+          <li class="nav-item"><a class="nav-link" href="cart.php">
+            <span class="bi ">Cart</span>
+              <span class="badge rounded-pill bg-danger position-absolute top-0 start-100 translate-middle">
+                3
+              </span>
+         </a>
           <li class="nav-item"><a class="nav-link" href="about">About</a></li>
           <li class="nav-item"><a class="nav-link" href="contact">Contact</a></li>
         </ul>
