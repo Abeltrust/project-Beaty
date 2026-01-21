@@ -42,20 +42,24 @@
       <div class="collapse navbar-collapse" id="editorialNav">
         <ul class="navbar-nav mx-auto gap-lg-4 text-center mt-4 mt-lg-0">
           <li class="nav-item"><a class="nav-link" href="product.php">Shop</a></li>
-          <?php if (isset($_SESSION['user_id'])): ?>
-            <li class="nav-item">
-              <a class="nav-link" href="#cart">Cart</a>
-            </li>
-          <?php endif; ?>
-
-          <li class="nav-item"><a class="nav-link" href="#about.php">About</a></li>
+          <?php if (session_start())?>
+              <?php if ( isset($_SESSION['user_id'])): ?>
+                <li class="nav-item">
+                   <li class="nav-item"><a class="nav-link" href="cart.php">Cart</a></li>
+                </li>
+              <?php endif; ?>
           <li class="nav-item"><a class="nav-link" href="#contact.php">Contact</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about.php">About</a></li>
         </ul>
   
         <!-- Actions -->
         <div class="nav-actions d-flex flex-column flex-lg-row gap-2 mt-4 mt-lg-0">
+        <?php if (isset($_SESSION['user_id'])): ?>
+            <a class="btn btn-auth ms-lg-3" href="auth/logout.php">Logout</a>
+        <?php else: ?>  
             <a class="btn btn-auth ms-lg-3" href="auth/login.php">Login</a>
-            <a class="btn btn-auth ms-lg-2" href="auth/register.php">Sign Up</a>                      
+            <a class="btn btn-auth ms-lg-2" href="auth/register.php">Sign Up</a>    
+          <?php endif; ?>                      
         </div>
       </div>
   

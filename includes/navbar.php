@@ -28,9 +28,12 @@ if (session_status() === PHP_SESSION_NONE) {
   
         <!-- Actions -->
         <div class="nav-actions d-flex flex-column flex-lg-row gap-2 mt-4 mt-lg-0">
+        <?php if (isset($_SESSION['user_id'])): ?>
+            <a class="btn btn-auth ms-lg-3" href="auth/logout.php">Logout</a>
+        <?php else: ?>  
             <a class="btn btn-auth ms-lg-3" href="auth/login.php">Login</a>
             <a class="btn btn-auth ms-lg-2" href="auth/register.php">Sign Up</a>    
-            <a class="btn btn-auth s-lg-2" href="/auth/logout.php">Logout</a>
+          <?php endif; ?>
                   
         </div>
       </div>

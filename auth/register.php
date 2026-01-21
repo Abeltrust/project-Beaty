@@ -184,9 +184,9 @@ body {
       <!-- Menu -->
       <div class="collapse navbar-collapse" id="editorialNav">
         <ul class="navbar-nav mx-auto gap-lg-4 text-center mt-4 mt-lg-0">
-          <li class="nav-item"><a class="nav-link" href="#products">Shop</a></li>
-          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+          <li class="nav-item"><a class="nav-link" href="../index.php">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="../about.php">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="../contact.php">Contact</a></li>
         </ul>
   
         <!-- Actions -->
