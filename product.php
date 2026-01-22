@@ -208,6 +208,16 @@ body{
   border: 2px var(--brand);
   border: 1px solid #000;
 }
+* HEADER ICON */
+.cart-header{
+  display:flex;
+  justify-content:center;
+  margin-bottom:2rem;
+}
+.cart-header i{
+  font-size:2.4rem;
+  color:var(--brand);
+}
 </style>
 </head>
 
@@ -251,7 +261,7 @@ body{
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="about">About</a>
+          <a class="nav-link" href="about.php">About</a>
         </li>
 
         <li class="nav-item">
@@ -269,8 +279,11 @@ body{
   </div>
 </nav>
 
-<div class="container py-4">
+<div class="container py-2 mb-5">
 
+  <div class="text-center cart-header mb-2">
+     <i class="bi bi-shop"></i>
+  </div>
 <!-- FILTER -->
 <div class="filter-bar mb-4">
   <div class="row g-2">
@@ -296,7 +309,7 @@ body{
 </div>
 
 <!-- PRODUCTS GRID -->
-<div class="row g-3" id="productGrid">
+<div class="row g-3 mb-5" id="productGrid">
   <!-- PRODUCT 0-->
 <div class="col-6 col-md-4  col-lg-2 product-item"
  data-name="luxury marble tile" data-category="Tiles" data-price="120000">

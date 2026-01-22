@@ -370,14 +370,14 @@ body{ background:#f5f5f5; }
     <div class="cart-total">
       ₦96,000
     </div>
-    <!-- <div class="d-c d-lg d-flex gap-4">
+    <div class="d-c d-lg d-flex gap-4">
           <a href="product.php" class="btn btn-outline-dark w-50">
                   <i class="bi bi-arrow-left"></i>
           </a>
           <a href="checkout.php" class="btn btn-primary-custom w-50">
             Checkout
           </a>
-        </div> -->
+        </div>
   </div>
 </div>
 
