@@ -118,7 +118,14 @@
     align-items: center;
     margin-top: 0;
   }
-
+  .btn-auth {
+    border: 1px solid var(--brand);
+    color: var(--brand);
+    padding: 6px 16px;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+  }
+  
   .btn-auth {
     width: auto;
     max-width: none;

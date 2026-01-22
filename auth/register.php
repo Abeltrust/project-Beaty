@@ -8,6 +8,7 @@ if (isset($_SESSION['user_id'])) {
   exit;
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -75,7 +76,7 @@ if (isset($_SESSION['user_id'])) {
     .btn-register {
       background: #c79a3d;
       color: #000;
-      border-radius: 999px;
+      border-radius: 10px;
       padding: .75rem;
       font-weight: 600;
       border: none;

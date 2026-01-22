@@ -99,17 +99,6 @@
       background: var(--brand);
       color: #000;
     }
-    .btn-auth {
-  background: transparent;
-  border: 1px solid var(--brand);
-  color: var(--brand);
-  font-weight: 600;
-}
-
-.btn-auth:hover {
-  background: var(--brand);
-  color: #000;
-}
 
     /* ================= HERO ================= */
     .hero {
@@ -142,7 +131,7 @@
       background: var(--brand);
       border: none;
       padding: 14px 32px;
-      border-radius: 30px;
+      border-radius: 0px;
       font-weight: 600;
       color: #000;
     }
@@ -188,7 +177,7 @@
     .btn-outline-brand {
       border: 1px solid var(--brand);
       color: var(--brand);
-      border-radius: 30px;
+      border-radius: 10px;
       padding: 10px 24px;
       font-weight: 600;
     }
@@ -350,105 +339,3 @@ body {
 }
 }
 
-/* body {
-    min-height: 100vh;
-    background:
-      linear-gradient(rgba(0,0,0,.55), rgba(0,0,0,.75)),
-      url("https://images.unsplash.com/photo-1618220179428-22790b461013")
-      center / cover no-repeat;
-  
-    font-family: 'Poppins', sans-serif;
-  
-    padding-top: 90px; /* space for fixed navbar 
-  }
-  
-  
-  
-      .login-card {
-        background: #ffffff;
-        border-radius: 22px;
-        padding: 2.5rem;
-        width: 100%;
-        max-width: 420px;
-        box-shadow: 0 30px 80px rgba(0,0,0,.35);
-      }
-  
-      .login-card h3 {
-        font-family: 'Playfair Display', serif;
-        font-weight: 700;
-      }
-  
-      .form-control {
-        border-radius: 14px;
-        padding: .75rem 1rem;
-      }
-  
-      .btn-login {
-        background: #c79a3d;
-        color: #000;
-        border-radius: 999px;
-        padding: .75rem;
-        font-weight: 600;
-        border: none;
-      }
-  
-      .btn-login:hover {
-        background: #ddb55a;
-      }
-  
-      .login-footer {
-        text-align: center;
-        margin-top: 1.5rem;
-        font-size: .9rem;
-      }
-  
-      .login-footer a {
-        color: #c79a3d;
-        text-decoration: none;
-        font-weight: 500;
-      }
-      @media (max-width: 576px) {
-  
-  body {
-    padding-left: 0.75rem;
-    padding-right: 0.75rem;
-  }
-  
-  .login-card {
-    padding: 1.25rem 1rem;
-    border-radius: 14px;
-    max-width: 100%;
-  }
-  
-  .login-card h3 {
-    font-size: 1.2rem;
-    margin-bottom: 0.25rem;
-  }
-  
-  .login-card p {
-    font-size: 0.85rem;
-    margin-bottom: 1rem;
-  }
-  
-  .form-control {
-    padding: 0.55rem 0.75rem;
-    font-size: 0.9rem;
-    border-radius: 10px;
-  }
-  
-  .btn-login {
-    padding: 0.6rem;
-    font-size: 0.9rem;
-  }
-  
-  .login-footer {
-    font-size: 0.8rem;
-    margin-top: 1rem;
-  }
-  }
-  @media (max-width: 576px) {
-    body {
-      padding-top: 64px;
-    }
-  }
-   */

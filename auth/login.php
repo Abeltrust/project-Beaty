@@ -110,7 +110,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     .btn-login {
       background: #c79a3d;
       color: #000;
-      border-radius: 999px;
+      border-radius: 10px;
       padding: .75rem;
       font-weight: 600;
       border: none;
@@ -204,7 +204,7 @@ body {
   
         <!-- Actions -->
         <div class="nav-actions d-flex flex-column flex-lg-row gap-2 mt-4 mt-lg-0">
-            <a class="btn btn-auth ms-lg-2" href="auth/register.php">Sign Up</a>                      
+            <a class="btn btn-auth ms-lg-2" href="register.php">Sign Up</a>                      
         </div>
       </div>
   
