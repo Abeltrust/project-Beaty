@@ -5,7 +5,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 ?>
 
-<nav class="navbar navbar-expand-lg editorial-nav fixed-top">
+<nav class="navbar navbar-expand-lg editorial-nav fixed-top ">
     <div class="container-fluid px-4">
   
       <!-- Brand -->

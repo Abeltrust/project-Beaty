@@ -1,6 +1,4 @@
-<?php
-session_start();
-?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -99,18 +97,31 @@ session_start();
       box-shadow:0 30px 60px rgba(0,0,0,.1);
       text-align:center;
     }
+    .btn-primary-custom1{
+  color:#000;
+  background:var(--brand);
+  border: 1px solid #000;
+  border-radius: 50;
+  font-weight:300;
+  transition:all 0.25s ease;
+}
+.btn-primary-custom1:hover{
+  color:#000;
+  border: 2px var(--brand);
+  border: 1px solid #000;
+}
   </style>
 </head>
 <body>
 
 <?php include "includes/navbar.php"; ?>
 
-<div class="container">
+<div class="container mt-5">
 
   <!-- HERO -->
-  <section class="about-hero mb-5">
+  <section class="about-hero ">
     <h1>About Beauty Multi-Service</h1>
-    <p class="mt-3">
+    <p class="mt-2">
       We are a premium interior materials company dedicated to supplying
       high-quality tiles, finishes, and building solutions that transform
       spaces into timeless works of beauty.
@@ -198,7 +209,7 @@ session_start();
         perfect materials for your next project.
       </p>
 
-      <a href="product.php" class="btn btn-primary-custom me-2">
+      <a href="product.php" class="btn btn-primary-custom1 me-2 mb-2">
         Browse Products
       </a>
 

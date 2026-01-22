@@ -48,8 +48,8 @@
                    <li class="nav-item"><a class="nav-link" href="cart.php">Cart</a></li>
                 </li>
               <?php endif; ?>
-          <li class="nav-item"><a class="nav-link" href="#contact.php">Contact</a></li>
-          <li class="nav-item"><a class="nav-link" href="#about.php">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.php">Contact</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.php">About</a></li>
         </ul>
   
         <!-- Actions -->
