@@ -157,7 +157,11 @@ body{ background:#f5f5f5; }
 .mobile-checkout span {
   font-weight: 600;
 }
-
+.btn-primary-custom{
+  color:var(--brand);
+  border: 2px var(--brand);
+  hover: var(--brand);
+}
 </style>
 </head>
 
@@ -344,14 +348,7 @@ body{ background:#f5f5f5; }
           <span>Total</span>
           <span>₦<?= number_format($total) ?></span>
         </div>
-
-        <a href="checkout.php" class="btn btn-primary-custom w-100 mb-2">
-          Checkout
-        </a>
-
-        <a href="product.php" class="btn btn-outline-dark w-100">
-          Continue Shopping
-        </a>
+ 
       </div>
     </div>
 
@@ -360,8 +357,10 @@ body{ background:#f5f5f5; }
 
 <!-- MOBILE BAR -->
 <div class="mobile-checkout d-lg-none">
-  <span>Total: ₦108,500</span>
-  <a href="checkout.php" class="btn btn-primary-custom">
+  <a href="product.php" class="btn btn-outline-dark w-50">
+          <i class="bi bi-arrow-left"></i>
+  </a>
+  <a href="checkout.php" class="btn btn-primary-custom w-50">
     Checkout
   </a>
 </div>
