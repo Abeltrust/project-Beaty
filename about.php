@@ -209,13 +209,15 @@
         perfect materials for your next project.
       </p>
 
-      <a href="product.php" class="btn btn-primary-custom1 me-2 mb-2">
-        Browse Products
-      </a>
+      <div class="stat-box ">
+        <a href="product.php" class="btn btn-primary-custom1 me-2 mb-1">
+            Browse Products
+        </a>
 
-      <a href="https://wa.me/2347043079022" class="btn btn-outline-dark">
-        Talk to Us
-      </a>
+        <a href="https://wa.me/2347043079022" class="btn btn-outline-dark ">
+            Talk to Us
+        </a>
+      </div>
     </div>
   </section>
 
