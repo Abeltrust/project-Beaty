@@ -186,14 +186,77 @@ body{ background:#f5f5f5; }
   border: 2px var(--brand);
   border: 1px solid #000;
 }
+.btn-auth1 {
+    border: 1px solid var(--brand);
+    color: var(--brand);
+    padding: 6px 16px;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-auth1 {
+    width: auto;
+    max-width: none;
+    padding: 6px 16px;
+  }
 </style>
 </head>
 
 <body>
 
-<?php include "includes/navbar.php"; ?>
+<nav class="navbar w navbar-expand-lg editorial-nav fixed-top">
+  <div class="container-fluid px-4">
 
-<div class="container py-5 cart-wrapper">
+    <!-- Brand -->
+    <a class="navbar-brand" href="#">
+      BMS
+    </a>
+
+    <!-- Toggler -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#editorialNav"
+    >
+      <i class="bi bi-list fs-2"></i>
+    </button>
+
+    <!-- Menu -->
+    <div class="collapse navbar-collapse" id="editorialNav">
+      <ul class="navbar-nav mx-auto gap-lg-4 text-center mt-4 mt-lg-0">
+
+        <li class="nav-item">
+          <a class="nav-link" href="index.php">Home</a>
+        </li>
+
+        <li class="nav-item position-relative">
+          <a class="nav-link" href="product.php">
+            <span class="bi">Shop</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="about.php">About</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="contact.php">Contact</a>
+        </li>
+
+      </ul>
+
+      <!-- Actions -->
+      <div class="nav-actions d-flex flex-column flex-lg-row gap-2 mt-4 mt-lg-0">
+        <a class="btn btn-auth1 s-lg-2" href="auth/logout.php">Logout</a>
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+
+<div class="container py-3 mb-5 cart-wrapper">
 
   <!-- ICON HEADER -->
   
@@ -307,14 +370,14 @@ body{ background:#f5f5f5; }
     <div class="cart-total">
       ₦96,000
     </div>
-    <div class="d-c d-lg d-flex gap-4">
+    <!-- <div class="d-c d-lg d-flex gap-4">
           <a href="product.php" class="btn btn-outline-dark w-50">
                   <i class="bi bi-arrow-left"></i>
           </a>
           <a href="checkout.php" class="btn btn-primary-custom w-50">
             Checkout
           </a>
-        </div>
+        </div> -->
   </div>
 </div>
 

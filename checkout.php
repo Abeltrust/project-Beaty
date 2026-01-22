@@ -184,7 +184,62 @@ body{
 
 <body>
 
-<?php include "includes/navbar.php"; ?>
+<nav class="navbar w navbar-expand-lg editorial-nav fixed-top">
+  <div class="container-fluid px-4">
+
+    <!-- Brand -->
+    <a class="navbar-brand" href="#">
+      BMS
+    </a>
+
+    <!-- Toggler -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#editorialNav"
+    >
+      <i class="bi bi-list fs-2"></i>
+    </button>
+
+    <!-- Menu -->
+    <div class="collapse navbar-collapse" id="editorialNav">
+      <ul class="navbar-nav mx-auto gap-lg-4 text-center mt-4 mt-lg-0">
+
+        <li class="nav-item">
+          <a class="nav-link" href="index.php">Home</a>
+        </li>
+
+        <li class="nav-item position-relative">
+          <a class="nav-link" href="cart.php">
+            <span class="bi bi-cart3">Cart</span>
+            <span
+              class="badge rounded-pill bg-danger position-absolute top-0 start-100 translate-middle"
+            >
+              3
+            </span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="about">About</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="contact">Contact</a>
+        </li>
+
+      </ul>
+
+      <!-- Actions -->
+      <div class="nav-actions d-flex flex-column flex-lg-row gap-2 mt-4 mt-lg-0">
+        <a class="btn btn-auth s-lg-2" href="auth/logout.php">Logout</a>
+      </div>
+    </div>
+
+  </div>
+</nav>
+
 
 <div class="container checkout-wrapper py-4">
 
