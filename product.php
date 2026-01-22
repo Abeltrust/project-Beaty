@@ -10,7 +10,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
-<link rel="stylesheet" href="assets/css/navbar.php">
+<link rel="stylesheet" href="assets/css/navbar.css">
 <style>
 :root { --brand:#c79a3d; }
 
@@ -184,6 +184,19 @@ body{
 
 .mobile-checkout span {
   font-weight: 600;
+}
+.btn-primary-custom1{
+  color:#000;
+  background:var(--brand);
+  border: 1px solid #000;
+  border-radius: 50;
+  font-weight:300;
+  transition:all 0.25s ease;
+}
+.btn-primary-custom1:hover{
+  color:#000;
+  border: 2px var(--brand);
+  border: 1px solid #000;
 }
 </style>
 </head>
@@ -380,10 +393,11 @@ body{
 
 </div>
 </div>
-<div class="mobile-checkout d-lg-none">
-  <span>Total: ₦108,500</span>
-  <a href="cart.php" class="btn btn-primary-custom">
+<div class="mobile-checkout d-lg d-flex gap-4">
+  <span >Total: ₦108,500</span>
+  <a href="cart.php" class="btn w-50 btn-primary-custom1">
      <i class="bi bi-cart3"></i>
+     <span>Cart<span>
   </a>
 </div>
 <!-- MODAL -->

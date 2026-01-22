@@ -142,6 +142,36 @@ body{
   body{padding-top:64px;}
   .summary-card{position:static;}
 }
+.mobile-checkout {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-top: 1px solid #eee;
+  padding: .75rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 999;
+}
+
+.mobile-checkout span {
+  font-weight: 600;
+}
+.btn-primary-custom{
+  color:#000;
+  background:var(--brand);
+  border: 1px solid #000;
+  border-radius: 50;
+  font-weight:300;
+  transition:all 0.25s ease;
+}
+.btn-primary-custom:hover{
+  color:#000;
+  border: 2px var(--brand);
+  border: 1px solid #000;
+}
 </style>
 </head>
 
@@ -187,10 +217,6 @@ body{
         </div>
       </div>
       <?php endforeach; ?>
-
-      <button name="cart.php" class="btn btn-outline-dark w-100 mt-2">
-        Update Cart
-      </button>
     </div>
 
     <!-- SUMMARY -->
@@ -213,10 +239,8 @@ body{
           <span>₦<?= number_format($total) ?></span>
         </div>
 
-        <a href="<?= $wa ?>" target="_blank"
-           class="btn btn-success w-100 mt-3">
-          <i class="bi bi-whatsapp me-1"></i>
-          Checkout via WhatsApp
+        <a href="cart.php" class="btn btn-outline-dark w-100 mt-2 mx-50">
+        Update Cart
         </a>
 
       </div>
@@ -226,6 +250,17 @@ body{
   </form>
 
 </div>
-
+<div class="mobile-checkout d-lg d-flex gap-4" >
+     <a href="<?= $wa ?>" target="_blank"
+           class="btn btn-success text-light btn-outline-dark w-50 mt-3 mr-1">
+          <i class="bi bi-whatsapp me-1"></i>
+          Checkout
+        </a>
+        <a href="<?= $wa ?>" target="_blank"
+           class="btn btn-outline-dark  w-50 mt-3">
+          <i class="bi bi-envelope me-2"></i>
+          Checkout
+        </a>
+</div>
 </body>
 </html>

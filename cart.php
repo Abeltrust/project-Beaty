@@ -133,7 +133,23 @@ body{ background:#f5f5f5; }
   position:sticky;
   top:110px;
 }
+.d-c {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-top: 1px solid #eee;
+  padding: .75rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 999;
+}
 
+.d-c span {
+  font-weight: 600;
+}
 /* MOBILE */
 @media(max-width:768px){
   .cart-grid{ grid-template-columns:56px 1fr auto; }
@@ -158,9 +174,17 @@ body{ background:#f5f5f5; }
   font-weight: 600;
 }
 .btn-primary-custom{
-  color:var(--brand);
+  color:#000;
+  background:var(--brand);
+  border: 1px solid #000;
+  border-radius: 50;
+  font-weight:300;
+  transition:all 0.25s ease;
+}
+.btn-primary-custom:hover{
+  color:#000;
   border: 2px var(--brand);
-  hover: var(--brand);
+  border: 1px solid #000;
 }
 </style>
 </head>
@@ -283,7 +307,14 @@ body{ background:#f5f5f5; }
     <div class="cart-total">
       ₦96,000
     </div>
-
+    <div class="d-c d-lg d-flex gap-4">
+          <a href="product.php" class="btn btn-outline-dark w-50">
+                  <i class="bi bi-arrow-left"></i>
+          </a>
+          <a href="checkout.php" class="btn btn-primary-custom w-50">
+            Checkout
+          </a>
+        </div>
   </div>
 </div>
 
@@ -348,7 +379,7 @@ body{ background:#f5f5f5; }
           <span>Total</span>
           <span>₦<?= number_format($total) ?></span>
         </div>
- 
+      
       </div>
     </div>
 
@@ -356,7 +387,7 @@ body{ background:#f5f5f5; }
 </div>
 
 <!-- MOBILE BAR -->
-<div class="mobile-checkout d-lg-none">
+<div class="mobile-checkout d-lg-none gap-4">
   <a href="product.php" class="btn btn-outline-dark w-50">
           <i class="bi bi-arrow-left"></i>
   </a>
