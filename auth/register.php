@@ -1,11 +1,36 @@
 <?php
-session_start();
 include "../includes/db.php";
 include "../includes/csrf.php";
 
 if (isset($_SESSION['user_id'])) {
   header("Location: ../product.php");
   exit;
+}
+
+$error = "";
+
+if (!empty($_POST)) {
+  // Check if email already exists
+  $check = $pdo->prepare("SELECT id FROM users WHERE email = ?");
+  $check->execute([$_POST['email']]);
+
+  if ($check->fetch()) {
+    $error = "An account with this email already exists.";
+  } else {
+    // Insert new user
+    $stmt = $pdo->prepare(
+      "INSERT INTO users (name, email, password) VALUES (?, ?, ?)"
+    );
+
+    $stmt->execute([
+      $_POST['name'],
+      $_POST['email'],
+      password_hash($_POST['password'], PASSWORD_DEFAULT)
+    ]);
+
+    header("Location: login.php");
+    exit;
+  }
 }
 ?>
 
@@ -242,37 +267,6 @@ body {
     <a href="login.php">Login</a>
   </div>
 </div>
-
-<?php
-$error = "";
-
-if (!empty($_POST)) {
-
-  // Check if email already exists
-  $check = $pdo->prepare("SELECT id FROM users WHERE email = ?");
-  $check->execute([$_POST['email']]);
-
-  if ($check->fetch()) {
-    $error = "An account with this email already exists.";
-  } else {
-
-    // Insert new user
-    $stmt = $pdo->prepare(
-      "INSERT INTO users (name, email, password) VALUES (?, ?, ?)"
-    );
-
-    $stmt->execute([
-      $_POST['name'],
-      $_POST['email'],
-      password_hash($_POST['password'], PASSWORD_DEFAULT)
-    ]);
-
-    header("Location: login.php");
-    exit;
-  }
-}
-
-?>
 
 </body>
 </html>

@@ -1,6 +1,6 @@
 <?php
 include "../includes/db.php";
-include "../includes/admin_check.php";
+
 
 $error = "";
 $success = "";
@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     else {
 
-      $uploadDir = realpath(__DIR__ . "../assets/images/products");
+      $uploadDir = realpath(__DIR__ . "/../assets/images/products");
 
       if (!$uploadDir || !is_writable($uploadDir)) {
         $error = "Upload directory is not writable.";

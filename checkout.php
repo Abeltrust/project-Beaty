@@ -2,7 +2,6 @@
 <?php
 include "includes/db.php";
 include "includes/auth_check.php";
-session_start();
 
 if (!isset($_SESSION['user_id'])) {
     $_SESSION['redirect_after_login'] = $_SERVER['REQUEST_URI'];

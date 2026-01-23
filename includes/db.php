@@ -14,6 +14,7 @@ try {
 } catch (PDOException $e) {
   die("DB Error");
 }
-
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 ?>

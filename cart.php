@@ -1,6 +1,6 @@
 <?php
-include "includes/db.php";
 session_start();
+include "includes/db.php";
 
 if (!isset($_SESSION['user_id'])) {
     $_SESSION['redirect_after_login'] = $_SERVER['REQUEST_URI'];
@@ -9,15 +9,36 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $uid = $_SESSION['user_id'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+    if (isset($_POST['add'])) {
+        $pid = (int)$_POST['add'];
+        $stmt = $pdo->prepare(
+            "INSERT INTO cart (user_id, product_id) VALUES (?, ?)"
+        );
+        $stmt->execute([$uid, $pid]);
+        header("Location: cart.php");
+        exit;
+    }
+
+    if (isset($_POST['delete'])) {
+        $cid = (int)$_POST['delete'];
+        $stmt = $pdo->prepare(
+            "DELETE FROM cart WHERE id = ? AND user_id = ?"
+        );
+        $stmt->execute([$cid, $uid]);
+        header("Location: cart.php");
+        exit;
+    }
+}
 $stmt = $pdo->prepare("
-  SELECT 
+  SELECT
     cart.id AS cart_id,
-    cart.quantity,
     products.name,
     products.price,
     products.image,
-    products.description
+    products.description,
+    cart.quantity
   FROM cart
   JOIN products ON cart.product_id = products.id
   WHERE cart.user_id = ?
@@ -26,6 +47,11 @@ $stmt->execute([$uid]);
 $cartItems = $stmt->fetchAll();
 
 $total = 0;
+foreach ($cartItems as $item) {
+    $total += $item['price'] * $item['quantity'];
+}
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -264,7 +290,7 @@ body{ background:#f5f5f5; }
        <a class="nav-link position-relative" href="cart.php">
             <i class="bi bi-cart3"></i>
             <span class="badge rounded-pill bg-danger position-absolute top-0 start-100 translate-middle">
-              3
+              <?= count($cartItems) ?>
             </span>
          </a>
   </div>
@@ -273,168 +299,62 @@ body{ background:#f5f5f5; }
 
     <!-- ITEMS -->
     <div class="col-12 col-lg-8">
-<!-- ================= CART ITEMS MOCKUP ================= -->
+      <!-- ================= CART ITEMS MOCKUP ================= -->
 
-<div class="cart-item-card">
-  <div class="cart-grid">
-
-    <img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea" class="cart-img">
-
-    <div class="cart-info">
-      <h6>Luxury Marble Tile</h6>
-      <p class="cart-desc">
-        Polished premium marble tile suitable for modern interior flooring.
-      </p>
-
-      <div class="cart-meta">
-        <span class="price-unit">₦45,000 / box</span>
-
-        <div class="qty-control">
-          <button>-</button>
-          <span>2</span>
-          <button>+</button>
-        </div>
-
-        <a href="#" class="remove-icon">
-          <i class="bi bi-trash3"></i>
-        </a>
-      </div>
-    </div>
-
-    <div class="cart-total">
-      ₦90,000
-    </div>
-
-  </div>
-</div>
-
-<div class="cart-item-card">
-  <div class="cart-grid">
-
-    <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7" class="cart-img">
-
-    <div class="cart-info">
-      <h6>Interior Wall Paint</h6>
-      <p class="cart-desc">
-        Smooth matte interior paint with long-lasting color protection.
-      </p>
-
-      <div class="cart-meta">
-        <span class="price-unit">₦18,500 / bucket</span>
-
-        <div class="qty-control">
-          <button>-</button>
-          <span>1</span>
-          <button>+</button>
-        </div>
-
-        <a href="#" class="remove-icon">
-          <i class="bi bi-trash3"></i>
-        </a>
-      </div>
-    </div>
-
-    <div class="cart-total">
-      ₦18,500
-    </div>
-
-  </div>
-</div>
-
-<div class="cart-item-card">
-  <div class="cart-grid">
-
-    <img src="https://images.unsplash.com/photo-1615874959474-d609969a20ed" class="cart-img">
-
-    <div class="cart-info">
-      <h6>Decorative Wall Panel</h6>
-      <p class="cart-desc">
-        Contemporary decorative wall panel for premium accent walls.
-      </p>
-
-      <div class="cart-meta">
-        <span class="price-unit">₦32,000 / panel</span>
-
-        <div class="qty-control">
-          <button>-</button>
-          <span>3</span>
-          <button>+</button>
-        </div>
-
-        <a href="#" class="remove-icon">
-          <i class="bi bi-trash3"></i>
-        </a>
-      </div>
-    </div>
-
-    <div class="cart-total">
-      ₦96,000
-    </div>
-    <div class="d-c d-lg d-flex gap-4">
-          <a href="product.php" class="btn btn-outline-dark w-50">
-                  <i class="bi bi-arrow-left"></i>
-          </a>
-          <a href="checkout.php" class="btn btn-primary-custom w-50">
-            Checkout
-          </a>
-        </div>
-  </div>
-</div>
-
-      <!-- <?php if(!$cartItems): ?>
-        <div class="alert alert-light text-center rounded-4">
-          <i class="bi bi-cart-x fs-2"></i><br>
-          Your cart is empty
-        </div>
-      <?php endif; ?> -->
-
-      <?php foreach($cartItems as $item): 
-        $subtotal = $item['price'] * $item['quantity'];
-        $total += $subtotal;
-      ?>
-      <div class="cart-item-card">
-        <div class="cart-grid">
-          <img src="assets/storage/products/<?= htmlspecialchars($item['image']) ?>" class="cart-img">
-
-          <div class="cart-info">
-            <h6><?= htmlspecialchars($item['name']) ?></h6>
-            <p class="cart-desc"><?= htmlspecialchars(substr($item['description'],0,70)) ?>...</p>
-
-            <div class="cart-meta">
-              <span class="price-unit">₦<?= number_format($item['price']) ?></span>
-
-              <div class="qty-control">
-                <button>-</button>
-                <span><?= $item['quantity'] ?></span>
-                <button>+</button>
+      <?php if ($cartItems): ?>
+        <?php foreach ($cartItems as $item): ?>
+          <div class="cart-item-card">
+            <div class="cart-grid">
+              <img src="assets/images/products/<?= htmlspecialchars($item['image']) ?>" class="cart-img" alt="<?= htmlspecialchars($item['name']) ?>">
+              <div class="cart-info">
+                <h6><?= htmlspecialchars($item['name']) ?></h6>
+                <p class="cart-desc">
+                  <?= htmlspecialchars($item['description']) ?>
+                </p>
+                <div class="cart-meta">
+                  <span class="price-unit">₦<?= number_format($item['price']) ?> / unit</span>
+                  <div class="qty-control">
+                    <span>Qty: <?= $item['quantity'] ?></span>
+                  </div>
+                  <button
+                    type="button"
+                    class="btn btn-link remove-icon p-0"
+                    data-bs-toggle="modal"
+                    data-bs-target="#confirmDeleteModal"
+                    data-cart-id="<?= $item['cart_id'] ?>"
+                  >
+                    <i class="bi bi-trash3"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="cart-total">
+                ₦<?= number_format($item['price'] * $item['quantity']) ?>
               </div>
 
-              <a href="#" class="remove-icon">
-                <i class="bi bi-trash3"></i>
-              </a>
             </div>
           </div>
 
-          <div class="cart-total">
-            ₦<?= number_format($subtotal) ?>
-          </div>
-        </div>
+        <?php endforeach; ?>
+      <?php else: ?>
+      <div class="alert alert-light text-center rounded-4">
+        <i class="bi bi-cart-x fs-2"></i><br>
+        Your cart is empty
       </div>
-      <?php endforeach; ?>
-
+      <?php endif; ?>
     </div>
 
     <!-- SUMMARY -->
     <div class="col-12 col-lg-4">
       <div class="cart-summary-card">
-        <h6 class="mb-3">Order Summary</h6>
+        <h6 class="mb-2">Order Summary</h6>
 
         <?php foreach($cartItems as $item): ?>
           <div class="d-flex justify-content-between small mb-1">
             <span><?= htmlspecialchars($item['name']) ?> × <?= $item['quantity'] ?></span>
-            <span>₦<?= number_format($item['price']*$item['quantity']) ?></span>
+            <span>₦<?= number_format($item['price'] * $item['quantity']) ?></span>
           </div>
         <?php endforeach; ?>
+
 
         <hr>
 
@@ -450,7 +370,7 @@ body{ background:#f5f5f5; }
 </div>
 
 <!-- MOBILE BAR -->
-<div class="mobile-checkout d-lg-none gap-4">
+<div class="mobile-checkout d-lg-6 gap-4">
   <a href="product.php" class="btn btn-outline-dark w-50">
           <i class="bi bi-arrow-left"></i>
   </a>
@@ -459,6 +379,51 @@ body{ background:#f5f5f5; }
   </a>
 </div>
 
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4">
+
+      <div class="modal-header border-0">
+        <h5 class="modal-title">Remove Item</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body text-center">
+        <i class="bi bi-trash3 fs-1 text-danger mb-3"></i>
+        <p class="mb-0">
+          Are you sure you want to remove this item from your cart?
+        </p>
+      </div>
+
+      <div class="modal-footer border-0">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+          Cancel
+        </button>
+
+        <form method="post">
+          <input type="hidden" name="delete" id="deleteCartId">
+          <button type="submit" class="btn btn-danger">
+            Yes, Remove
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const deleteModal = document.getElementById('confirmDeleteModal');
+
+  deleteModal.addEventListener('show.bs.modal', function (event) {
+    const button = event.relatedTarget;
+    const cartId = button.getAttribute('data-cart-id');
+    document.getElementById('deleteCartId').value = cartId;
+  });
+});
+</script>
 
 </body>
 </html>

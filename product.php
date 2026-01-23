@@ -1,11 +1,68 @@
 
 <?php
 session_start();
-
+include "includes/db.php";
 if (!isset($_SESSION['user_id'])) {
     header("Location: auth/login.php");
     exit;
 }
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
+
+    $pid = (int)$_POST['product_id'];
+    $uid = $_SESSION['user_id'];
+
+    // Check if product already exists in cart
+    $check = $pdo->prepare(
+        "SELECT id, quantity FROM cart WHERE user_id = ? AND product_id = ?"
+    );
+    $check->execute([$uid, $pid]);
+    $existing = $check->fetch();
+
+    if ($existing) {
+        // Product exists → update quantity
+        $update = $pdo->prepare(
+            "UPDATE cart SET quantity = quantity + 1 WHERE id = ?"
+        );
+        $update->execute([$existing['id']]);
+    } else {
+        // Product does not exist → insert new row
+        $insert = $pdo->prepare(
+            "INSERT INTO cart (user_id, product_id, quantity) VALUES (?, ?, 1)"
+        );
+        $insert->execute([$uid, $pid]);
+    }
+
+    $_SESSION['cart_message'] = "Product added to cart!";
+    header("Location: product.php");
+    exit;
+}
+
+// $stmt = $pdo->prepare("
+//   SELECT
+//     cart.id AS cart_id,
+//     products.name,
+//     products.price,
+//     products.image,
+//     products.description,
+//     cart.quantity
+//   FROM cart
+//   JOIN products ON cart.product_id = products.id
+//   WHERE cart.user_id = ?
+// ");
+// $stmt->execute([$uid]);
+// $cartItems = $stmt->fetchAll();
+
+
+
+$products = $pdo->query("SELECT * FROM products ORDER BY created_at DESC")->fetchAll();
+
+// Fetch cart data
+$cartStmt = $pdo->prepare("SELECT COUNT(cart.id) as count, SUM(products.price) as total FROM cart JOIN products ON cart.product_id = products.id WHERE cart.user_id = ?");
+$cartStmt->execute([$_SESSION['user_id']]);
+$cartData = $cartStmt->fetch();
+$cartCount = $cartData['count'] ?? 0;
+$cartTotal = $cartData['total'] ?? 0;
 ?>
 
 <!DOCTYPE html>
@@ -255,7 +312,7 @@ body{
             <span
               class="badge rounded-pill bg-danger position-absolute top-0 start-100 translate-middle"
             >
-              3
+              <?= $cartCount ?>
             </span>
           </a>
         </li>
@@ -308,116 +365,91 @@ body{
   </div>
 </div>
 
+<?php if (isset($_SESSION['cart_message'])): ?>
+  <div class="alert alert-success text-center">
+    <?= htmlspecialchars($_SESSION['cart_message']) ?>
+  </div>
+  <?php unset($_SESSION['cart_message']); ?>
+<?php endif; ?>
+
 <!-- PRODUCTS GRID -->
 <div class="row g-3 mb-5" id="productGrid">
-  <!-- PRODUCT 0-->
-<div class="col-6 col-md-4  col-lg-2 product-item"
- data-name="luxury marble tile" data-category="Tiles" data-price="120000">
- <div class="product-card" data-bs-toggle="modal" data-bs-target="#quickView"
-  data-name="Luxury Marble Tile" data-price="120,000"
-  data-image="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea">
-  <span class="badge-new">NEW</span>
-  <div class="product-img">
-    <img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea">
-  </div>
-  <div class="float-icon"><i class="bi bi-eye"></i></div>
-  <div class="product-body">
-    <h6>Luxury Marble Tile</h6>
-    <div class="price">₦120,000</div>
-  </div>
-  <div class="quick-view"><span>Quick View</span></div>
- </div>
-</div>
-<!-- PRODUCT 1 -->
-<div class="col-6 col-md-4  col-lg-2 product-item"
- data-name="luxury marble tile" data-category="Tiles" data-price="120000">
- <div class="product-card" data-bs-toggle="modal" data-bs-target="#quickView"
-  data-name="Luxury Marble Tile" data-price="120,000"
-  data-image="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea">
-  <span class="badge-new">NEW</span>
-  <div class="product-img">
-    <img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea">
-  </div>
-  <div class="float-icon"><i class="bi bi-eye"></i></div>
-  <div class="product-body">
-    <h6>Luxury Marble Tile</h6>
-    <div class="price">₦120,000</div>
-  </div>
-  <div class="quick-view"><span>Quick View</span></div>
- </div>
-</div>
+  <?php foreach ($products as $p): ?>
+  <div class="col-6 col-md-4 col-lg-2 product-item"
+       data-name="<?= htmlspecialchars(strtolower($p['name'])) ?>"
+       data-category="Product"
+       data-price="<?= $p['price'] ?>">
 
-<!-- PRODUCT 2 -->
-<div class="col-6 col-md-4  col-lg-2 product-item"
- data-name="luxury marble tile" data-category="Tiles" data-price="120000">
- <div class="product-card" data-bs-toggle="modal" data-bs-target="#quickView"
-  data-name="Luxury Marble Tile" data-price="120,000"
-  data-image="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea">
-  <span class="badge-new">NEW</span>
-  <div class="product-img">
-    <img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea">
-  </div>
-  <div class="float-icon"><i class="bi bi-eye"></i></div>
-  <div class="product-body">
-    <h6>Luxury Marble Tile</h6>
-    <div class="price">₦120,000</div>
-  </div>
-  <div class="quick-view"><span>Quick View</span></div>
- </div>
-</div>
-<div class="col-6 col-md-4 col-lg-2 product-item">
-  <div class="product-card"
-       data-bs-toggle="modal"
-       data-bs-target="#quickView"
-       data-name="Luxury Marble Tile"
-       data-price="120,000"
-       data-image="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea">
+    <div class="product-card" data-id="<?= $p['id'] ?>">
+      <span class="badge-new">NEW</span>
 
-    <span class="badge-new">NEW</span>
+      <!-- IMAGE (OPENS MODAL) -->
+      <div class="product-img">
+        <img
+          src="assets/images/products/<?= htmlspecialchars($p['image']) ?>"
+          alt="<?= htmlspecialchars($p['name']) ?>"
+          data-bs-toggle="modal"
+          data-bs-target="#quickView"
+          data-id="<?= $p['id'] ?>"
+          data-name="<?= htmlspecialchars($p['name']) ?>"
+          data-price="<?= number_format($p['price']) ?>"
+          data-image="assets/images/products/<?= htmlspecialchars($p['image']) ?>"
+          data-description="<?= htmlspecialchars($p['description']) ?>"
+        >
+      </div>
 
-    <div class="product-img">
-      <img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea">
+      <!-- FLOAT EYE ICON (OPENS MODAL) -->
+      <button
+        type="button"
+        class="float-icon border-0 bg-white"
+        data-bs-toggle="modal"
+        data-bs-target="#quickView"
+        data-id="<?= $p['id'] ?>"
+        data-name="<?= htmlspecialchars($p['name']) ?>"
+        data-price="<?= number_format($p['price']) ?>"
+        data-image="assets/images/products/<?= htmlspecialchars($p['image']) ?>"
+        data-description="<?= htmlspecialchars($p['description']) ?>"
+      >
+        <i class="bi bi-eye"></i>
+      </button>
+
+      <div class="product-body">
+        <h6><?= htmlspecialchars($p['name']) ?></h6>
+        <div class="price">₦<?= number_format($p['price']) ?></div>
+
+        <div class="mt-2 d-flex gap-1">
+          <!-- INFO BUTTON (OPENS MODAL) -->
+          <button
+            type="button"
+            class="btn btn-sm btn-outline-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#quickView"
+            data-id="<?= $p['id'] ?>"
+            data-name="<?= htmlspecialchars($p['name']) ?>"
+            data-price="<?= number_format($p['price']) ?>"
+            data-image="assets/images/products/<?= htmlspecialchars($p['image']) ?>"
+            data-description="<?= htmlspecialchars($p['description']) ?>"
+          >
+            <i class="bi bi-info-circle"></i>
+          </button>
+
+          <!-- ADD TO CART (DIRECT, NO MODAL) -->
+          <form method="post" class="flex-grow-1" onclick="event.stopPropagation();">
+            <input type="hidden" name="product_id" value="<?= $p['id'] ?>">
+            <button type="submit" name="add_to_cart" class="btn btn-sm btn-dark w-100">
+              <i class="bi bi-cart-plus"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+
     </div>
-
-    <div class="float-icon">
-      <i class="bi bi-eye"></i>
-    </div>
-
-    <div class="product-body">
-      <h6>Luxury Marble Tile</h6>
-      <div class="price">₦120,000</div>
-    </div>
-
-    <div class="quick-view">
-      <span>Quick View</span>
-    </div>
-
   </div>
+  <?php endforeach; ?>
 </div>
 
-<!-- PRODUCT 3 -->
-<div class="col-6 col-md-4 col-lg-2 product-item"
- data-name="interior wall panel" data-category="Panels" data-price="65000">
- <div class="product-card" data-bs-toggle="modal" data-bs-target="#quickView"
-  data-name="Interior Wall Panel" data-price="65,000"
-  data-image="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6">
-  <span class="badge-new">NEW</span>
-  <div class="product-img">
-    <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6">
-  </div>
-  <div class="float-icon"><i class="bi bi-eye"></i></div>
-  <div class="product-body">
-    <h6>Interior Wall Panel</h6>
-    <div class="price">₦65,000</div>
-  </div>
-  <div class="quick-view"><span>Quick View</span></div>
- </div>
-</div>
-
-</div>
-</div>
 <div class="mobile-checkout d-lg d-flex gap-4">
-  <span >Total: ₦108,500</span>
+  <span >Total: ₦<?= number_format($cartTotal) ?></span>
   <a href="cart.php" class="btn w-50 btn-primary-custom1">
      <i class="bi bi-cart3"></i>
      <span>Cart<span>
@@ -431,9 +463,13 @@ body{
     <img id="mImg" class="img-fluid rounded mb-3">
     <h5 id="mName"></h5>
     <p class="fw-bold text-warning">₦<span id="mPrice"></span></p>
-    <button class="btn btn-dark w-100">
-      <i class="bi bi-cart-plus"></i> Add to Cart
-    </button>
+    <form method="post">
+      <input type="hidden" name="product_id" id="mProductId">
+      <button type="submit" name="add_to_cart" class="btn btn-dark w-100">
+        <i class="bi bi-cart-plus"></i> Add to Cart
+      </button>
+    </form>
+
    </div>
   </div>
  </div>
@@ -462,12 +498,14 @@ function filter(){
 }
 
 /* MODAL */
-document.getElementById('quickView').addEventListener('show.bs.modal',e=>{
- const c=e.relatedTarget;
- mName.innerText=c.dataset.name;
- mPrice.innerText=c.dataset.price;
- mImg.src=c.dataset.image;
+document.getElementById('quickView').addEventListener('show.bs.modal', e => {
+  const c = e.relatedTarget;
+  mName.innerText = c.dataset.name;
+  mPrice.innerText = c.dataset.price;
+  mImg.src = c.dataset.image;
+  document.getElementById('mProductId').value = c.dataset.id;
 });
+
 </script>
 </body>
 </html>

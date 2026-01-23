@@ -1,6 +1,6 @@
 <?php
 include "../includes/db.php";
-include "../includes/admin_check.php";
+
 
 /* Fetch stats */
 $totalProducts = $pdo->query("SELECT COUNT(*) FROM products")->fetchColumn();
