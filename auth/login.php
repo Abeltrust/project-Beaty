@@ -29,22 +29,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         } else {
 
             $stmt = $pdo->prepare(
-                "SELECT id, password, role FROM users WHERE email = ? LIMIT 1"
+                "SELECT id, password, role, email_verified FROM users WHERE email = ? LIMIT 1"
             );
             $stmt->execute([$email]);
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if ($user && password_verify($password, $user['password'])) {
-
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['role'] = $user['role'];
-
-                if ($_SESSION['role'] === 'admin') {
-                  header("Location: ../admin/dashboard.php");
+                if ($user['email_verified'] == 0) {
+                    $error = "Please verify your email before logging in.";
                 } else {
-                  header("Location: ../product.php");
-                }
+                    $_SESSION['user_id'] = $user['id'];
+                    $_SESSION['role'] = $user['role'];
 
+                    if ($_SESSION['role'] === 'admin') {
+                      header("Location: ../admin/dashboard.php");
+                    } else {
+                      header("Location: ../product.php");
+                    }
+                }
             } else {
                 $error = "Invalid email or password.";
             }

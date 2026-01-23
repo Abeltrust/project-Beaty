@@ -270,6 +270,14 @@ body{ background:#f5f5f5; }
           <a class="nav-link" href="contact.php">Contact</a>
         </li>
 
+        <li class="nav-item">
+          <a class="nav-link" href="profile.php">Profile</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="orders.php">Orders</a>
+        </li>
+
       </ul>
 
       <!-- Actions -->
@@ -314,8 +322,21 @@ body{ background:#f5f5f5; }
                 <div class="cart-meta">
                   <span class="price-unit">₦<?= number_format($item['price']) ?> / unit</span>
                   <div class="qty-control">
-                    <span>Qty: <?= $item['quantity'] ?></span>
-                  </div>
+                      <!-- DECREASE -->
+                      <form method="post">
+                        <input type="hidden" name="decrease" value="<?= $item['cart_id'] ?>">
+                        <button type="submit">−</button>
+                      </form>
+
+                      <span><?= $item['quantity'] ?></span>
+
+                      <!-- INCREASE -->
+                      <form method="post">
+                        <input type="hidden" name="increase" value="<?= $item['cart_id'] ?>">
+                        <button type="submit">+</button>
+                      </form>
+
+                    </div>
                   <button
                     type="button"
                     class="btn btn-link remove-icon p-0"

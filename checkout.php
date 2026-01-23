@@ -178,6 +178,87 @@ body{
   border: 2px var(--brand);
   border: 1px solid #000;
 }
+/* ===== REVIEW LIST ===== */
+.review-card{
+  background:#fff;
+  border-radius:18px;
+  padding:1.4rem;
+  box-shadow:0 14px 40px rgba(0,0,0,.08);
+}
+
+.review-title{
+  font-weight:600;
+}
+
+.review-item{
+  display:flex;
+  justify-content:space-between;
+  padding:.75rem 0;
+  border-bottom:1px dashed #e5e5e5;
+}
+
+.review-item:last-child{
+  border-bottom:none;
+}
+
+.review-name{
+  font-weight:600;
+  font-size:.95rem;
+}
+
+.review-meta{
+  font-size:.8rem;
+  color:#777;
+}
+
+.review-right{
+  font-weight:600;
+}
+
+/* ===== ACTION BUTTONS ===== */
+.checkout-actions{
+  max-width:600px;
+  margin:2rem auto;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1rem;
+}
+
+.btn-whatsapp{
+  background:#25D366;
+  color:#fff;
+  border-radius:999px;
+  padding:.85rem;
+  font-weight:600;
+  text-align:center;
+}
+
+.btn-whatsapp:hover{
+  background:#1ebe5d;
+  color:#fff;
+}
+
+.btn-email{
+  background:#fff;
+  border:2px solid #000;
+  border-radius:999px;
+  padding:.85rem;
+  font-weight:600;
+  text-align:center;
+}
+
+.btn-email:hover{
+  background:#000;
+  color:#fff;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+  .checkout-actions{
+    grid-template-columns:1fr;
+  }
+}
+
 </style>
 </head>
 
@@ -252,76 +333,79 @@ body{
 
     <!-- ITEMS -->
     <div class="col-12 col-lg-7">
+      <div class="review-card">
 
-      <?php foreach ($items as $i): 
-        $sub = $i['price'] * $i['quantity'];
-      ?>
-      <div class="checkout-item">
-        <div class="checkout-grid">
-          <div>
-            <div class="item-name"><?= htmlspecialchars($i['name']) ?></div>
-            <div class="item-price">₦<?= number_format($i['price']) ?> each</div>
-          </div>
+        <h6 class="review-title mb-3">
+          <i class="bi bi-receipt me-1"></i> Order Review
+        </h6>
 
-          <div class="text-end">
-            <input
-              type="number"
-              min="1"
-              class="form-control qty-input mb-1"
-              name="qty[<?= $i['product_id'] ?>]"
-              value="<?= $i['quantity'] ?>"
-            >
-            <small class="fw-semibold">
+        <?php foreach ($items as $i): 
+          $sub = $i['price'] * $i['quantity'];
+        ?>
+          <div class="review-item">
+            <div class="review-left">
+              <div class="review-name"><?= htmlspecialchars($i['name']) ?></div>
+              <div class="review-meta">
+                Qty: <?= $i['quantity'] ?> × ₦<?= number_format($i['price']) ?>
+              </div>
+            </div>
+
+            <div class="review-right">
               ₦<?= number_format($sub) ?>
-            </small>
+            </div>
           </div>
-        </div>
+        <?php endforeach; ?>
+
       </div>
-      <?php endforeach; ?>
+
     </div>
 
     <!-- SUMMARY -->
     <div class="col-12 col-lg-5">
-      <div class="summary-card">
+     <div class="summary-card">
 
-        <h6 class="mb-3">Order Summary</h6>
+          <h6 class="mb-3">Order Summary</h6>
 
-        <?php foreach ($items as $i): ?>
-        <div class="summary-row">
-          <span><?= htmlspecialchars($i['name']) ?> x<?= $i['quantity'] ?></span>
-          <span>₦<?= number_format($i['price'] * $i['quantity']) ?></span>
+          <?php foreach ($items as $i): ?>
+            <div class="summary-row">
+              <span><?= htmlspecialchars($i['name']) ?> × <?= $i['quantity'] ?></span>
+              <span>₦<?= number_format($i['price'] * $i['quantity']) ?></span>
+            </div>
+          <?php endforeach; ?>
+
+          <hr>
+
+          <div class="summary-row summary-total">
+            <span>Total</span>
+            <span>₦<?= number_format($total) ?></span>
+          </div>
+
+          <a href="cart.php" class="btn btn-outline-dark w-100 mt-3">
+            Edit Cart
+          </a>
+
         </div>
-        <?php endforeach; ?>
-
-        <hr>
-
-        <div class="summary-row summary-total">
-          <span>Total</span>
-          <span>₦<?= number_format($total) ?></span>
-        </div>
-
-        <a href="cart.php" class="btn btn-outline-dark w-100 mt-2 mx-50">
-        Update Cart
-        </a>
-
-      </div>
-    </div>
 
   </div>
   </form>
 
 </div>
-<div class="mobile-checkout d-lg d-flex gap-4" >
-     <a href="<?= $wa ?>" target="_blank"
-           class="btn btn-success text-light btn-outline-dark w-50 mt-3 mr-1">
-          <i class="bi bi-whatsapp me-1"></i>
-          Checkout
-        </a>
-        <a href="<?= $wa ?>" target="_blank"
-           class="btn btn-outline-dark  w-50 mt-3">
-          <i class="bi bi-envelope me-2"></i>
-          Checkout
-        </a>
+<div class="checkout-actions">
+
+  <a href="<?= $wa ?>" target="_blank" class="btn btn-whatsapp">
+    <i class="bi bi-whatsapp"></i>
+    Send Order via WhatsApp
+  </a>
+
+  <a href="mailto:beautymultiservice@gmail.com
+     ?subject=New Order #<?= $orderId ?>
+     &body=<?= urlencode($orderText . "\nTotal: ₦" . $total) ?>"
+     class="btn btn-email">
+    <i class="bi bi-envelope"></i>
+    Send Order via Email
+  </a>
+
 </div>
+
 </body>
 </html>

@@ -17,19 +17,28 @@ if (!empty($_POST)) {
   if ($check->fetch()) {
     $error = "An account with this email already exists.";
   } else {
+    // Generate verification token
+    $token = bin2hex(random_bytes(32));
+
     // Insert new user
     $stmt = $pdo->prepare(
-      "INSERT INTO users (name, email, password) VALUES (?, ?, ?)"
+      "INSERT INTO users (name, email, password, email_verified, verification_token) VALUES (?, ?, ?, 0, ?)"
     );
 
     $stmt->execute([
       $_POST['name'],
       $_POST['email'],
-      password_hash($_POST['password'], PASSWORD_DEFAULT)
+      password_hash($_POST['password'], PASSWORD_DEFAULT),
+      $token
     ]);
 
-    header("Location: login.php");
-    exit;
+    // Send verification email (for development, display link instead)
+    // $subject = "Verify Your Email - Beauty Multi-Service";
+    // $message = "Hi " . htmlspecialchars($_POST['name']) . ",\n\nPlease verify your email by clicking the link: http://localhost/project-Beaty/auth/verify.php?token=" . $token;
+    // $headers = "From: noreply@beautymultiservice.com";
+    // mail($_POST['email'], $subject, $message, $headers);
+
+    $success = "Registration successful! Please verify your email by clicking this link: <a href='http://localhost/project-Beaty/auth/verify.php?token=" . $token . "'>Verify Email</a>";
   }
 }
 ?>
@@ -230,6 +239,11 @@ body {
 <?php if (!empty($error)): ?>
   <div class="alert alert-danger text-center">
     <?= htmlspecialchars($error) ?>
+  </div>
+<?php endif; ?>
+<?php if (!empty($success)): ?>
+  <div class="alert alert-success text-center">
+    <?= htmlspecialchars($success) ?>
   </div>
 <?php endif; ?>
 

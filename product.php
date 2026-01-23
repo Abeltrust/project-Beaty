@@ -38,20 +38,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
     exit;
 }
 
-// $stmt = $pdo->prepare("
-//   SELECT
-//     cart.id AS cart_id,
-//     products.name,
-//     products.price,
-//     products.image,
-//     products.description,
-//     cart.quantity
-//   FROM cart
-//   JOIN products ON cart.product_id = products.id
-//   WHERE cart.user_id = ?
-// ");
-// $stmt->execute([$uid]);
-// $cartItems = $stmt->fetchAll();
 
 
 
@@ -147,7 +133,7 @@ body{
 
 /* ================= BODY ================= */
 .product-body{
-  padding:.65rem .7rem;
+  padding:.63rem .7rem;
   display:flex;
   flex-direction:column;
   gap:.25rem;
@@ -324,7 +310,13 @@ body{
         <li class="nav-item">
           <a class="nav-link" href="contact">Contact</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="profile.php">Profile</a>
+        </li>
 
+        <li class="nav-item">
+          <a class="nav-link" href="orders.php">Orders</a>
+        </li>
       </ul>
 
       <!-- Actions -->
@@ -373,9 +365,9 @@ body{
 <?php endif; ?>
 
 <!-- PRODUCTS GRID -->
-<div class="row g-3 mb-5" id="productGrid">
+<div class="row g-4 mb-5" id="productGrid">
   <?php foreach ($products as $p): ?>
-  <div class="col-6 col-md-4 col-lg-2 product-item"
+  <div class=" col-sm-3 col-lg-2 product-item"
        data-name="<?= htmlspecialchars(strtolower($p['name'])) ?>"
        data-category="Product"
        data-price="<?= $p['price'] ?>">
