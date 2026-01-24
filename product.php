@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
 $products = $pdo->query("SELECT * FROM products ORDER BY created_at DESC")->fetchAll();
 
 // Fetch cart data
-$cartStmt = $pdo->prepare("SELECT COUNT(cart.id) as count, SUM(products.price) as total FROM cart JOIN products ON cart.product_id = products.id WHERE cart.user_id = ?");
+$cartStmt = $pdo->prepare("SELECT COUNT(cart.id) as count, SUM(products.price * cart.quantity) as total FROM cart JOIN products ON cart.product_id = products.id WHERE cart.user_id = ?");
 $cartStmt->execute([$_SESSION['user_id']]);
 $cartData = $cartStmt->fetch();
 $cartCount = $cartData['count'] ?? 0;
@@ -139,6 +139,18 @@ body{
   gap:.25rem;
 }
 
+/* Desktop: side by side */
+@media (min-width: 992px){
+  .product-body{
+    flex-direction:row;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .product-text{
+    flex:1;
+  }
+}
+
 .product-body h6{
   font-size:.78rem;
   font-weight:600;
@@ -220,6 +232,9 @@ body{
   .cart-grid{ grid-template-columns:56px 1fr auto; }
   .cart-img{ width:56px; height:56px; }
   .cart-summary-card{ position:static; }
+  #quickView .modal-dialog {
+    max-width: 90%;
+  }
 }
 .mobile-checkout {
   position: fixed;
@@ -365,9 +380,9 @@ body{
 <?php endif; ?>
 
 <!-- PRODUCTS GRID -->
-<div class="row g-4 mb-5" id="productGrid">
+<div class="row g-0 g-sm-1 mb-5" id="productGrid">
   <?php foreach ($products as $p): ?>
-  <div class=" col-sm-3 col-lg-2 product-item"
+  <div class="col-6 col-sm-4 col-lg-2 product-item mb-2"
        data-name="<?= htmlspecialchars(strtolower($p['name'])) ?>"
        data-category="Product"
        data-price="<?= $p['price'] ?>">
@@ -406,8 +421,10 @@ body{
       </button>
 
       <div class="product-body">
-        <h6><?= htmlspecialchars($p['name']) ?></h6>
-        <div class="price">₦<?= number_format($p['price']) ?></div>
+        <div class="product-text">
+          <h6><?= htmlspecialchars($p['name']) ?></h6>
+          <div class="price">₦<?= number_format($p['price']) ?></div>
+        </div>
 
         <div class="mt-2 d-flex gap-1">
           <!-- INFO BUTTON (OPENS MODAL) -->

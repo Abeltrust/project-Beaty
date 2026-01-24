@@ -11,22 +11,40 @@ if (!isset($_SESSION['user_id'])) {
 $uid = $_SESSION['user_id'];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    if (isset($_POST['add'])) {
-        $pid = (int)$_POST['add'];
-        $stmt = $pdo->prepare(
-            "INSERT INTO cart (user_id, product_id) VALUES (?, ?)"
-        );
-        $stmt->execute([$uid, $pid]);
+    if (isset($_POST['increase'])) {
+        $cid = (int)$_POST['increase'];
+        $stmt = $pdo->prepare("UPDATE cart SET quantity = quantity + 1 WHERE id = ? AND user_id = ?");
+        $stmt->execute([$cid, $uid]);
+        header("Location: cart.php");
+        exit;
+    }
+
+    if (isset($_POST['decrease'])) {
+        $cid = (int)$_POST['decrease'];
+        $check = $pdo->prepare("SELECT quantity FROM cart WHERE id = ? AND user_id = ?");
+        $check->execute([$cid, $uid]);
+        $current = $check->fetch();
+        if ($current && $current['quantity'] > 1) {
+            $stmt = $pdo->prepare("UPDATE cart SET quantity = quantity - 1 WHERE id = ? AND user_id = ?");
+            $stmt->execute([$cid, $uid]);
+        }
+        // If quantity is 1, do nothing
         header("Location: cart.php");
         exit;
     }
 
     if (isset($_POST['delete'])) {
         $cid = (int)$_POST['delete'];
-        $stmt = $pdo->prepare(
-            "DELETE FROM cart WHERE id = ? AND user_id = ?"
-        );
-        $stmt->execute([$cid, $uid]);
+        $check = $pdo->prepare("SELECT quantity FROM cart WHERE id = ? AND user_id = ?");
+        $check->execute([$cid, $uid]);
+        $current = $check->fetch();
+        if ($current && $current['quantity'] > 1) {
+            $stmt = $pdo->prepare("UPDATE cart SET quantity = quantity - 1 WHERE id = ? AND user_id = ?");
+            $stmt->execute([$cid, $uid]);
+        } else {
+            $stmt = $pdo->prepare("DELETE FROM cart WHERE id = ? AND user_id = ?");
+            $stmt->execute([$cid, $uid]);
+        }
         header("Location: cart.php");
         exit;
     }
@@ -156,8 +174,7 @@ body{ background:#f5f5f5; }
   border-radius:18px;
   padding:1.6rem;
   box-shadow:0 18px 45px rgba(0,0,0,.08);
-  position:sticky;
-  top:110px;
+  overflow-y: auto;
 }
 .d-c {
   position: fixed;
@@ -303,7 +320,7 @@ body{ background:#f5f5f5; }
          </a>
   </div>
 
-  <div class="row g-4">
+  <div class="row g-2">
 
     <!-- ITEMS -->
     <div class="col-12 col-lg-8">
@@ -366,7 +383,7 @@ body{ background:#f5f5f5; }
 
     <!-- SUMMARY -->
     <div class="col-12 col-lg-4">
-      <div class="cart-summary-card">
+      <div class="cart-summary-card h-100">
         <h6 class="mb-2">Order Summary</h6>
 
         <?php foreach($cartItems as $item): ?>
@@ -412,7 +429,7 @@ body{ background:#f5f5f5; }
       <div class="modal-body text-center">
         <i class="bi bi-trash3 fs-1 text-danger mb-3"></i>
         <p class="mb-0">
-          Are you sure you want to remove this item from your cart?
+          This will reduce the quantity by 1 or remove the item if it's the last one.
         </p>
       </div>
 
@@ -424,7 +441,7 @@ body{ background:#f5f5f5; }
         <form method="post">
           <input type="hidden" name="delete" id="deleteCartId">
           <button type="submit" class="btn btn-danger">
-            Yes, Remove
+            Yes, Proceed
           </button>
         </form>
       </div>

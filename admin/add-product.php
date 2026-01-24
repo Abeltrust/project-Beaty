@@ -7,12 +7,64 @@ $success = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
+  if (isset($_POST['update_product'])) {
+    $id = intval($_POST['edit_id']);
+    $name = trim($_POST['edit_name']);
+    $price = floatval($_POST['edit_price']);
+    $quantity = intval($_POST['edit_quantity']);
+    $desc = trim($_POST['edit_description']);
+
+    if (!$name || !$price || $quantity < 0) {
+      $error = "Invalid data.";
+    } else {
+      $updateData = [$name, $desc, $price, $quantity, $id];
+      $updateQuery = "UPDATE products SET name = ?, description = ?, price = ?, quantity = ? WHERE id = ?";
+
+      if (isset($_FILES['edit_image']) && $_FILES['edit_image']['error'] === UPLOAD_ERR_OK) {
+        $allowedTypes = ['image/jpeg','image/png','image/webp'];
+        $fileType = $_FILES['edit_image']['type'];
+        if (in_array($fileType, $allowedTypes) && $_FILES['edit_image']['size'] <= 10 * 1024 * 1024) {
+          $ext = pathinfo($_FILES['edit_image']['name'], PATHINFO_EXTENSION);
+          $imgName = uniqid("prod_", true) . "." . strtolower($ext);
+          $target = realpath(__DIR__ . "/../assets/images/products") . "/" . $imgName;
+          if (move_uploaded_file($_FILES['edit_image']['tmp_name'], $target)) {
+            $updateQuery = "UPDATE products SET name = ?, description = ?, price = ?, quantity = ?, image = ? WHERE id = ?";
+            $updateData = [$name, $desc, $price, $quantity, $imgName, $id];
+          } else {
+            $error = "Image upload failed.";
+          }
+        } else {
+          $error = "Invalid image.";
+        }
+      }
+
+      if (!$error) {
+        $stmt = $pdo->prepare($updateQuery);
+        $stmt->execute($updateData);
+        $success = "Product updated successfully.";
+        header("Location: add-product.php");
+        exit;
+      }
+    }
+  }
+
+  if (isset($_POST['delete_id'])) {
+    $id = intval($_POST['delete_id']);
+    $stmt = $pdo->prepare("DELETE FROM products WHERE id = ?");
+    $stmt->execute([$id]);
+    $success = "Product deleted successfully.";
+    header("Location: add-product.php");
+    exit;
+  }
+
+  // Add product logic
   $name  = trim($_POST['name']);
   $price = floatval($_POST['price']);
   $desc  = trim($_POST['description']);
+  $quantity = intval($_POST['quantity']);
 
-  if (!$name || !$price) {
-    $error = "Product name and price are required.";
+  if (!$name || !$price || $quantity < 0) {
+    $error = "Product name, price, and valid quantity are required.";
   }
   elseif (!isset($_FILES['image']) || $_FILES['image']['error'] !== UPLOAD_ERR_OK) {
     $error = "Upload error code: " . ($_FILES['image']['error'] ?? 'unknown');
@@ -44,10 +96,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
 
           $stmt = $pdo->prepare(
-            "INSERT INTO products (name, description, price, image)
-             VALUES (?, ?, ?, ?)"
+            "INSERT INTO products (name, description, price, image, quantity)
+             VALUES (?, ?, ?, ?, ?)"
           );
-          $stmt->execute([$name, $desc, $price, $imgName]);
+          $stmt->execute([$name, $desc, $price, $imgName, $quantity]);
 
           $success = "Product added successfully.";
         }
@@ -115,6 +167,11 @@ $products = $pdo->query("SELECT * FROM products ORDER BY id DESC")->fetchAll();
             <input class="form-control" name="price" type="number" step="0.01" required>
           </div>
 
+          <div class="col-md-12">
+            <label class="form-label">Quantity</label>
+            <input class="form-control" name="quantity" type="number" min="0" required>
+          </div>
+
           <div class="col-12">
             <label class="form-label">Description</label>
             <textarea class="form-control" name="description" rows="3"></textarea>
@@ -122,8 +179,15 @@ $products = $pdo->query("SELECT * FROM products ORDER BY id DESC")->fetchAll();
 
           <div class="col-12">
             <label class="form-label">Product Image</label>
-            <input class="form-control" type="file" name="image" required>
-            <small class="text-muted">JPG, PNG, WEBP — max 10MB</small>
+            <div id="uploadArea" class="border border-dashed p-4 text-center bg-light">
+              <div id="uploadContent">
+                <i class="bi bi-cloud-upload fs-1 text-muted"></i>
+                <p class="mb-2">Drag & drop your image here or <span class="text-primary" style="cursor:pointer;" id="uploadLink">click to browse</span></p>
+                <small class="text-muted">JPG, PNG, WEBP — max 10MB</small>
+              </div>
+              <img id="imagePreview" class="img-fluid d-none" style="max-height:200px;">
+            </div>
+            <input type="file" id="imageInput" name="image" accept="image/*" class="d-none" required>
           </div>
 
           <div class="col-12 text-end">
@@ -151,7 +215,11 @@ $products = $pdo->query("SELECT * FROM products ORDER BY id DESC")->fetchAll();
           >
           <div class="card-body text-center">
             <h6 class="mb-1"><?= htmlspecialchars($p['name']) ?></h6>
-            <small class="text-muted">₦<?= number_format($p['price']) ?></small>
+            <small class="text-muted">₦<?= number_format($p['price']) ?> | Qty: <?= $p['quantity'] ?? 0 ?></small>
+            <div class="mt-2">
+              <button class="btn btn-sm btn-outline-primary me-1" onclick="editProduct(<?= $p['id'] ?>, '<?= htmlspecialchars(addslashes($p['name'])) ?>', '<?= htmlspecialchars(addslashes($p['description'])) ?>', <?= $p['price'] ?>, <?= $p['quantity'] ?? 0 ?>, '<?= htmlspecialchars($p['image']) ?>')">Edit</button>
+              <button class="btn btn-sm btn-outline-danger" onclick="deleteProduct(<?= $p['id'] ?>)">Delete</button>
+            </div>
           </div>
         </div>
       </div>
@@ -159,6 +227,110 @@ $products = $pdo->query("SELECT * FROM products ORDER BY id DESC")->fetchAll();
   </div>
 
 </div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Product</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <form method="post" enctype="multipart/form-data">
+        <div class="modal-body">
+          <input type="hidden" name="edit_id" id="editId">
+          <div class="mb-3">
+            <label class="form-label">Product Name</label>
+            <input class="form-control" name="edit_name" id="editName" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Price (₦)</label>
+            <input class="form-control" name="edit_price" id="editPrice" type="number" step="0.01" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Quantity</label>
+            <input class="form-control" name="edit_quantity" id="editQuantity" type="number" min="0" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea class="form-control" name="edit_description" id="editDescription" rows="3"></textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Product Image (leave empty to keep current)</label>
+            <input class="form-control" type="file" name="edit_image" accept="image/*">
+            <img id="editImagePreview" class="img-fluid mt-2" style="max-height:100px;">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" name="update_product" class="btn btn-primary">Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const uploadArea = document.getElementById('uploadArea');
+  const uploadContent = document.getElementById('uploadContent');
+  const imagePreview = document.getElementById('imagePreview');
+  const imageInput = document.getElementById('imageInput');
+  const uploadLink = document.getElementById('uploadLink');
+
+  // Click to browse
+  uploadLink.addEventListener('click', () => imageInput.click());
+
+  // Drag over
+  uploadArea.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    uploadArea.classList.add('bg-primary', 'text-white');
+  });
+
+  // Drag leave
+  uploadArea.addEventListener('dragleave', () => {
+    uploadArea.classList.remove('bg-primary', 'text-white');
+  });
+
+  // Drop
+  uploadArea.addEventListener('drop', (e) => {
+    e.preventDefault();
+    uploadArea.classList.remove('bg-primary', 'text-white');
+    const files = e.dataTransfer.files;
+    if (files.length) {
+      handleFile(files[0]);
+    }
+  });
+
+  // File input change
+  imageInput.addEventListener('change', (e) => {
+    if (e.target.files.length) {
+      handleFile(e.target.files[0]);
+    }
+  });
+
+function editProduct(id, name, desc, price, quantity, image) {
+  document.getElementById('editId').value = id;
+  document.getElementById('editName').value = name;
+  document.getElementById('editPrice').value = price;
+  document.getElementById('editQuantity').value = quantity;
+  document.getElementById('editDescription').value = desc;
+  document.getElementById('editImagePreview').src = '../assets/images/products/' + image;
+  new bootstrap.Modal(document.getElementById('editModal')).show();
+}
+
+function deleteProduct(id) {
+  if (confirm('Are you sure you want to delete this product?')) {
+    const form = document.createElement('form');
+    form.method = 'post';
+    form.innerHTML = '<input name="delete_id" value="' + id + '">';
+    document.body.appendChild(form);
+    form.submit();
+  }
+}
+</script>
 
 </body>
 
