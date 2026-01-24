@@ -328,7 +328,7 @@ body{ background:#f5f5f5; }
 </nav>
 
 
-<div class="container py-3 mb-5 cart-wrapper">
+<div class="container py-5 mb-5 cart-wrapper">
 
   <!-- ICON HEADER -->
   
@@ -344,7 +344,7 @@ body{ background:#f5f5f5; }
   <div class="row g-2">
 
     <!-- ITEMS -->
-    <div class="col-12 col-lg-8">
+    <div class="col-12 col-lg-8 mb-2">
       <!-- ================= CART ITEMS MOCKUP ================= -->
 
       <?php if ($cartItems): ?>
@@ -407,6 +407,7 @@ body{ background:#f5f5f5; }
     </div>
 
     <!-- SUMMARY -->
+   <?php if ($cartItems): ?>
     <div class="col-12 col-lg-4">
       <div class="cart-summary-card h-100">
         <h6 class="mb-2">Order Summary</h6>
@@ -431,15 +432,17 @@ body{ background:#f5f5f5; }
 
   </div>
 </div>
-
+<?php endif; ?>
 <!-- MOBILE BAR -->
 <div class="mobile-checkout d-lg-6 gap-4">
-  <a href="product.php" class="btn btn-outline-dark w-50">
+  <a href="product.php" class="btn btn-outline-dark w-50 <?php if ($cartItems): ?>w-100<?php endif; ?>">
           <i class="bi bi-arrow-left"></i>
   </a>
+  <?php if ($cartItems): ?>
   <a href="checkout.php" class="btn btn-primary-custom w-50">
     Checkout
   </a>
+<?php endif; ?>
 </div>
 
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1">
