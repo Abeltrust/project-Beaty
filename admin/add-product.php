@@ -179,13 +179,13 @@ $products = $pdo->query("SELECT * FROM products ORDER BY id DESC")->fetchAll();
 
           <div class="col-12">
             <label class="form-label">Product Image</label>
-            <div id="uploadArea" class="border border-dashed p-4 text-center bg-light">
+            <div id="uploadArea" class="border border-dashed p-4 text-center bg-light rounded">
               <div id="uploadContent">
-                <i class="bi bi-cloud-upload fs-1 text-muted"></i>
-                <p class="mb-2">Drag & drop your image here or <span class="text-primary" style="cursor:pointer;" id="uploadLink">click to browse</span></p>
+                <i class="bi bi-cloud-upload-fill fs-1 text-primary mb-2"></i>
+                <p class="mb-2">Drag & drop your image here or <span class="text-primary fw-bold" style="cursor:pointer;" id="uploadLink">click to browse</span></p>
                 <small class="text-muted">JPG, PNG, WEBP — max 10MB</small>
               </div>
-              <img id="imagePreview" class="img-fluid d-none" style="max-height:200px;">
+              <img id="imagePreview" class="img-fluid d-none rounded" style="max-height:200px;">
             </div>
             <input type="file" id="imageInput" name="image" accept="image/*" class="d-none" required>
           </div>
@@ -228,7 +228,27 @@ $products = $pdo->query("SELECT * FROM products ORDER BY id DESC")->fetchAll();
 
 </div>
 
-<!-- Edit Modal -->
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Delete Product</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete this product? This action cannot be undone.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <form method="post" style="display:inline;">
+          <input type="hidden" name="delete_id" id="deleteId">
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="modal fade" id="editModal" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -257,8 +277,8 @@ $products = $pdo->query("SELECT * FROM products ORDER BY id DESC")->fetchAll();
           </div>
           <div class="mb-3">
             <label class="form-label">Product Image (leave empty to keep current)</label>
-            <input class="form-control" type="file" name="edit_image" accept="image/*">
-            <img id="editImagePreview" class="img-fluid mt-2" style="max-height:100px;">
+            <input class="form-control" type="file" name="edit_image" id="editImageInput" accept="image/*">
+            <img id="editImagePreview" class="img-fluid mt-2 rounded" style="max-height:100px;">
           </div>
         </div>
         <div class="modal-footer">
@@ -286,18 +306,24 @@ document.addEventListener('DOMContentLoaded', function() {
   // Drag over
   uploadArea.addEventListener('dragover', (e) => {
     e.preventDefault();
-    uploadArea.classList.add('bg-primary', 'text-white');
+    uploadArea.classList.add('border-primary', 'bg-light');
+  });
+
+  // Drag enter
+  uploadArea.addEventListener('dragenter', (e) => {
+    e.preventDefault();
+    uploadArea.classList.add('border-primary', 'bg-light');
   });
 
   // Drag leave
-  uploadArea.addEventListener('dragleave', () => {
-    uploadArea.classList.remove('bg-primary', 'text-white');
+  uploadArea.addEventListener('dragleave', (e) => {
+    uploadArea.classList.remove('border-primary', 'bg-light');
   });
 
   // Drop
   uploadArea.addEventListener('drop', (e) => {
     e.preventDefault();
-    uploadArea.classList.remove('bg-primary', 'text-white');
+    uploadArea.classList.remove('border-primary', 'bg-light');
     const files = e.dataTransfer.files;
     if (files.length) {
       handleFile(files[0]);
@@ -311,6 +337,30 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
+  function handleFile(file) {
+    if (!file.type.startsWith('image/')) {
+      alert('Please select an image file.');
+      return;
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      alert('File size must be less than 10MB.');
+      return;
+    }
+    // Set the input
+    const dt = new DataTransfer();
+    dt.items.add(file);
+    imageInput.files = dt.files;
+    // Preview
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      imagePreview.src = e.target.result;
+      imagePreview.classList.remove('d-none');
+      uploadContent.classList.add('d-none');
+    };
+    reader.readAsDataURL(file);
+  }
+});
+
 function editProduct(id, name, desc, price, quantity, image) {
   document.getElementById('editId').value = id;
   document.getElementById('editName').value = name;
@@ -318,18 +368,28 @@ function editProduct(id, name, desc, price, quantity, image) {
   document.getElementById('editQuantity').value = quantity;
   document.getElementById('editDescription').value = desc;
   document.getElementById('editImagePreview').src = '../assets/images/products/' + image;
+  document.getElementById('editImageInput').value = '';
   new bootstrap.Modal(document.getElementById('editModal')).show();
 }
 
 function deleteProduct(id) {
-  if (confirm('Are you sure you want to delete this product?')) {
-    const form = document.createElement('form');
-    form.method = 'post';
-    form.innerHTML = '<input name="delete_id" value="' + id + '">';
-    document.body.appendChild(form);
-    form.submit();
-  }
+  document.getElementById('deleteId').value = id;
+  new bootstrap.Modal(document.getElementById('deleteModal')).show();
 }
+
+// Edit image preview
+document.getElementById('editImageInput').addEventListener('change', (e) => {
+  if (e.target.files.length) {
+    const file = e.target.files[0];
+    if (file.type.startsWith('image/') && file.size <= 10 * 1024 * 1024) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        document.getElementById('editImagePreview').src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+});
 </script>
 
 </body>
