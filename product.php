@@ -382,7 +382,7 @@ body{
 <!-- PRODUCTS GRID -->
 <div class="row g-0 g-sm-1 mb-5" id="productGrid">
   <?php foreach ($products as $p): ?>
-  <div class="col-6 col-sm-4 col-lg-2 product-item mb-2"
+  <div class="col-12 col-sm-4 col-lg-3 product-item mb-2"
        data-name="<?= htmlspecialchars(strtolower($p['name'])) ?>"
        data-category="Product"
        data-price="<?= $p['price'] ?>">

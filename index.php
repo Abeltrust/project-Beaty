@@ -16,6 +16,53 @@
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/navbar.css">
+  
+  <style>
+    .hero-features {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-top: 2rem;
+      margin-left:2rem;
+      margin-right:2rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .hero-features {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .pill {
+      padding: 1rem 0.5rem;
+      font-size: 0.75rem;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 0.5rem;
+      font-weight: 500;
+      color: #333;
+      transition: all 0.3s ease;
+      min-height: 100px;
+      justify-content: center;
+    }
+
+    .pill i {
+      color: #c79a3d;
+      font-size: 1.5rem;
+    }
+
+    .pill:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+  </style>
   
 </head>
 

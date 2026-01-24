@@ -76,9 +76,8 @@
       color:var(--brand);
     }
 
-    .contact-item h6{
-      font-weight:600;
-      margin-bottom:.2rem;
+    .contact-item p{
+      word-break: break-word;
     }
 
     /* FORM */
@@ -108,7 +107,6 @@
     @media (max-width: 576px) {
   .contact-wrapper {
     padding: 2rem 1rem;
-    max-width: 100%;
   }
 
   .contact-card {
@@ -123,7 +121,7 @@
 
 <?php include "includes/navbar.php"; ?>
 
-<div class="container col-12 col-md-6 mt-4 contact-wrapper">
+<div class="container mt-4 contact-wrapper" style="max-width: 1200px;">
 
   <!-- HERO -->
   <section class="contact-hero mb-5">
@@ -136,10 +134,10 @@
 
   <!-- CONTACT CONTENT -->
   <section class="mb-5 ">
-    <div class="row g-4 mt-5">
+    <div class="row g-4">
 
       <!-- CONTACT INFO -->
-     <div class="col-12 col-md-6">
+     <div class="col-12 col-lg-4">
         <div class="contact-card">
 
           <div class="contact-item">
@@ -182,6 +180,25 @@
                 class="text-decoration-none"
               >
                 Chat with us instantly
+              </a>
+            </div>
+          </div>
+
+          <!-- SOCIAL MEDIA -->
+          <div class="mt-4">
+            <h6 class="mb-3">Follow Us</h6>
+            <div class="d-flex gap-3">
+              <a href="https://facebook.com/beautymultiservice" target="_blank" class="text-decoration-none">
+                <i class="bi bi-facebook fs-4 text-primary"></i>
+              </a>
+              <a href="mailto:support@beautymultiservice.com" class="text-decoration-none">
+                <i class="bi bi-envelope fs-4 text-danger"></i>
+              </a>
+              <a href="https://linkedin.com/company/beautymultiservice" target="_blank" class="text-decoration-none">
+                <i class="bi bi-linkedin fs-4 text-info"></i>
+              </a>
+              <a href="https://instagram.com/beautymultiservice" target="_blank" class="text-decoration-none">
+                <i class="bi bi-instagram fs-4 text-warning"></i>
               </a>
             </div>
           </div>
