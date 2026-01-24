@@ -28,10 +28,58 @@ $totalUsers = $pdo->query("SELECT COUNT(*) FROM users")->fetchColumn();
       border-radius: 18px;
       box-shadow: 0 10px 30px rgba(0,0,0,.08);
     }
+
+    .brand-logo{
+      height: 40px;        /* desktop size */
+      width: auto;
+      object-fit: contain;
+    }
+
+    /* Mobile tweak */
+    @media (max-width: 768px){
+      .brand-logo{
+        height: 32px;
+      }
+    }
   </style>
 </head>
 <body>
-<?php include "../includes/navbar.php";?>
+<!-- ================= EDITORIAL NAVBAR ================= -->
+<nav class="navbar navbar-expand-lg editorial-nav fixed-top">
+    <div class="container-fluid px-4">
+  
+       <!-- Brand -->
+      <a class="navbar-brand d-flex align-items-center" href="index.php">
+        <img 
+          src="../assets/images/logo.png" 
+          alt="Beauty Multi-Service Logo"
+          class="brand-logo"
+        >
+      </a>
+  
+      <!-- Toggler -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#editorialNav">
+        <i class="bi bi-list fs-2"></i>
+      </button>
+  
+      <!-- Menu -->
+      <div class="collapse navbar-collapse" id="editorialNav">
+        <ul class="navbar-nav mx-auto gap-lg-4 text-center mt-4 mt-lg-0">
+          <li class="nav-item"><a class="nav-link" href="../index.php">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="../about.php">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="../product.php">Shop</a></li>
+          <li class="nav-item"><a class="nav-link" href="../profile.php">Profile</a></li>
+          <li class="nav-item"><a class="nav-link" href="../contact.php">Contact</a></li>
+        </ul>
+  
+        <!-- Actions -->
+        <div class="nav-actions d-flex flex-column flex-lg-row gap-2 mt-4 mt-lg-0">
+            <a class="btn btn-auth ms-lg-2" href="register.php">Sign Up</a>                      
+        </div>
+      </div>
+  
+    </div>
+  </nav>
 <div class="container py-5">
 
   <!-- HEADER -->
@@ -91,6 +139,6 @@ $totalUsers = $pdo->query("SELECT COUNT(*) FROM users")->fetchColumn();
   </div>
 
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

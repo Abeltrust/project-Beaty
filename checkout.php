@@ -56,7 +56,7 @@ $msg .= "Order ID: #{$orderId}%0A%0A";
 $msg .= nl2br($orderText);
 $msg .= "%0ATotal: ₦{$total}";
 
-$wa = "https://wa.me/2347043079022?text=" . urlencode($msg);
+$wa = "https://wa.me/2348065500623?text=" . urlencode($msg);
 ?>
 
 <!DOCTYPE html>
@@ -69,7 +69,7 @@ $wa = "https://wa.me/2347043079022?text=" . urlencode($msg);
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
-<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/navbar.css">
 <style>
 :root{
   --brand:#c79a3d;
@@ -278,7 +278,7 @@ body{
 <nav class="navbar w navbar-expand-lg editorial-nav fixed-top">
   <div class="container-fluid px-4">
 
-   <!-- Brand -->
+      <!-- Brand -->
       <a class="navbar-brand d-flex align-items-center" href="index.php">
         <img 
           src="assets/images/logo.png" 
@@ -306,23 +306,26 @@ body{
         </li>
 
         <li class="nav-item position-relative">
-          <a class="nav-link" href="cart.php">
-            <span class="bi bi-cart3">Cart</span>
-            <!-- <span
-              class="badge rounded-pill bg-danger position-absolute top-0 start-100 translate-middle"
-            >
-              3
-            </span> -->
+          <a class="nav-link" href="product.php">
+            <span class="bi">Shop</span>
           </a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="about">About</a>
+          <a class="nav-link" href="about.php">About</a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="contact">Contact</a>
+          <a class="nav-link" href="contact.php">Contact</a>
         </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="profile.php">Profile</a>
+        </li>
+
+        <!-- <li class="nav-item">
+          <a class="nav-link" href="orders.php">Orders</a>
+        </li> -->
 
       </ul>
 
@@ -421,6 +424,6 @@ body{
   </a>
 
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -198,7 +198,7 @@ body {
        <!-- Brand -->
       <a class="navbar-brand d-flex align-items-center" href="index.php">
         <img 
-          src="assets/images/logo.png" 
+          src="../assets/images/logo.png" 
           alt="Beauty Multi-Service Logo"
           class="brand-logo"
         >

@@ -220,7 +220,7 @@ body {
       <!-- Brand -->
       <a class="navbar-brand d-flex align-items-center" href="index.php">
         <img 
-          src="assets/images/logo.png" 
+          src="../assets/images/logo.png" 
           alt="Beauty Multi-Service Logo"
           class="brand-logo"
         >
@@ -247,7 +247,7 @@ body {
   
     </div>
   </nav>
-
+<div class="container d-flex justify-content-center align-items-center" style="min-height: calc(100vh - 90px);">
 <div class="register-card">
   <h3>Create Your Account</h3>
   <p>Join us to explore premium interior materials.</p>
@@ -295,7 +295,9 @@ body {
     Already have an account?
     <a href="login.php">Login</a>
   </div>
+  </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

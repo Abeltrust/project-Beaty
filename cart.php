@@ -334,9 +334,9 @@ body{ background:#f5f5f5; }
 
       </ul>
 
-      <!-- Actions -->
+     <!-- Actions -->
       <div class="nav-actions d-flex flex-column flex-lg-row gap-2 mt-4 mt-lg-0">
-        <a class="btn btn-auth1 s-lg-2" href="auth/logout.php">Logout</a>
+        <a class="btn btn-auth1 s-lg-2 ms-lg-2" href="auth/logout.php">Logout</a>
       </div>
     </div>
 
