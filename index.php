@@ -198,9 +198,42 @@
   </div>  
 
 <!-- ================= FOOTER ================= -->
-<footer>
-  <div class="container text-center">
-    <p class="mb-0">© 2026 Beauty Multi-Service. All Rights Reserved.</p>
+<footer class="bg-dark text-light py-5">
+  <div class="container">
+    <div class="row g-4">
+      <!-- Company Info -->
+      <div class="col-md-4">
+        <h5 class="mb-3">Beauty Multi-Service</h5>
+        <p class="mb-0 small">
+          Your trusted partner for premium tiles and interior finishes.
+          Quality materials for exceptional spaces.
+        </p>
+      </div>
+      
+      <!-- Quick Links -->
+      <div class="col-md-4">
+        <h5 class="mb-3">Quick Links</h5>
+        <ul class="list-unstyled small">
+          <li><a href="product.php" class="text-light text-decoration-none">Shop</a></li>
+          <li><a href="about.php" class="text-light text-decoration-none">About Us</a></li>
+          <li><a href="contact.php" class="text-light text-decoration-none">Contact</a></li>
+        </ul>
+      </div>
+      
+      <!-- Contact Info -->
+      <div class="col-md-4">
+        <h5 class="mb-3">Get in Touch</h5>
+        <p class="small mb-1"><i class="bi bi-telephone me-2"></i>+234 704 307 9022</p>
+        <p class="small mb-1"><i class="bi bi-envelope me-2"></i>support@beautymultiservice.com</p>
+        <p class="small mb-0"><i class="bi bi-geo-alt me-2"></i>Lagos, Nigeria</p>
+      </div>
+    </div>
+    
+    <hr class="my-4">
+    
+    <div class="text-center small">
+      <p class="mb-0">© 2026 Beauty Multi-Service. All Rights Reserved.</p>
+    </div>
   </div>
 </footer>
 <script>
