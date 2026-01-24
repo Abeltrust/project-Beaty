@@ -197,7 +197,18 @@ body {
   margin-top: 1rem;
 }
 }
+.brand-logo{
+      height: 40px;        /* desktop size */
+      width: auto;
+      object-fit: contain;
+    }
 
+    /* Mobile tweak */
+    @media (max-width: 768px){
+      .brand-logo{
+        height: 32px;
+      }
+    }
 
   </style>
 </head>
@@ -207,8 +218,12 @@ body {
     <div class="container-fluid px-4">
   
       <!-- Brand -->
-      <a class="navbar-brand" href="index.html">
-        BMS
+      <a class="navbar-brand d-flex align-items-center" href="index.php">
+        <img 
+          src="assets/images/logo.png" 
+          alt="Beauty Multi-Service Logo"
+          class="brand-logo"
+        >
       </a>
   
       <!-- Toggler -->

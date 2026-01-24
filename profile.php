@@ -151,6 +151,18 @@ body{
     word-wrap: break-word;
   }
 }
+.brand-logo{
+      height: 40px;        /* desktop size */
+      width: auto;
+      object-fit: contain;
+    }
+
+    /* Mobile tweak */
+    @media (max-width: 768px){
+      .brand-logo{
+        height: 32px;
+      }
+    }
 </style>
 </head>
 
@@ -160,9 +172,13 @@ body{
   <div class="container-fluid px-4">
 
     <!-- Brand -->
-    <a class="navbar-brand" href="#">
-      BMS
-    </a>
+      <a class="navbar-brand d-flex align-items-center" href="index.php">
+        <img 
+          src="assets/images/logo.png" 
+          alt="Beauty Multi-Service Logo"
+          class="brand-logo"
+        >
+      </a>
 
     <!-- Toggler -->
     <button
@@ -200,9 +216,9 @@ body{
           <a class="nav-link" href="profile.php">Profile</a>
         </li>
 
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link" href="orders.php">Orders</a>
-        </li>
+        </li> -->
 
       </ul>
 

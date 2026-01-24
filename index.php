@@ -69,6 +69,19 @@
 .product-card{
     margin-left: 2rem;
 }
+.brand-logo{
+      height: 40px;        /* desktop size */
+      width: auto;
+      object-fit: contain;
+    }
+
+    /* Mobile tweak */
+    @media (max-width: 768px){
+      .brand-logo{
+        height: 32px;
+      }
+    }
+    
   </style>
   
 </head>
@@ -83,9 +96,14 @@
     <div class="container-fluid px-4">
   
       <!-- Brand -->
-      <a class="navbar-brand" href="#">
-        BMS
+      <a class="navbar-brand d-flex align-items-center" href="index.php">
+        <img 
+          src="assets/images/logo.png" 
+          alt="Beauty Multi-Service Logo"
+          class="brand-logo"
+        >
       </a>
+
   
       <!-- Toggler -->
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#editorialNav">
@@ -130,7 +148,7 @@
       We supply high-quality Spanish and Italian tiles, luxury interior materials,
       and modern building solutions designed to transform spaces.
     </p>
-    <a href="#products" class="btn btn-primary-custom mt-4">
+    <a href="product.php" class="btn btn-primary-custom mt-4">
       Explore Our Products
     </a>
   </div>
@@ -141,9 +159,9 @@
   <div class="container text-center">
     <h2 class="section-title">What We Do</h2>
     <p class="text-muted mx-auto" style="max-width: 750px;">
-      Beauty Multi-Service delivers world-class tiles and interior finishing solutions.
-      Our products are carefully selected for durability, beauty, and long-term value —
-      perfect for homes, offices, and large developments.
+      We are a premium dealer and distributor of CDK Porcelain, 
+      committed to supplying high-quality tiles, finishes, and building solutions that
+       transform spaces into timeless works of beauty.
     </p>
   </div>
 </section>
@@ -231,9 +249,9 @@
       <!-- Contact Info -->
       <div class="col-md-4">
         <h5 class="mb-3">Get in Touch</h5>
-        <p class="small mb-1"><i class="bi bi-telephone me-2"></i>+234 704 307 9022</p>
-        <p class="small mb-1"><i class="bi bi-envelope me-2"></i>support@beautymultiservice.com</p>
-        <p class="small mb-0"><i class="bi bi-geo-alt me-2"></i>Lagos, Nigeria</p>
+        <p class="small mb-1"><i class="bi bi-telephone me-2"></i>+234(0)8065500623</p>
+        <p class="small mb-1"><i class="bi bi-envelope me-2"></i>info@beautymultiservice.com.ng</p>
+        <p class="small mb-0"><i class="bi bi-geo-alt me-2"></i>Port Harcourt, Nigeria</p>
       </div>
     </div>
     

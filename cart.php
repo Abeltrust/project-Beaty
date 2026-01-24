@@ -263,6 +263,18 @@ body{ background:#f5f5f5; }
     max-width: none;
     padding: 6px 16px;
   }
+  .brand-logo{
+      height: 40px;        /* desktop size */
+      width: auto;
+      object-fit: contain;
+    }
+
+    /* Mobile tweak */
+    @media (max-width: 768px){
+      .brand-logo{
+        height: 32px;
+      }
+    }
 </style>
 </head>
 
@@ -271,10 +283,14 @@ body{ background:#f5f5f5; }
 <nav class="navbar w navbar-expand-lg editorial-nav fixed-top">
   <div class="container-fluid px-4">
 
-    <!-- Brand -->
-    <a class="navbar-brand" href="#">
-      BMS
-    </a>
+      <!-- Brand -->
+      <a class="navbar-brand d-flex align-items-center" href="index.php">
+        <img 
+          src="assets/images/logo.png" 
+          alt="Beauty Multi-Service Logo"
+          class="brand-logo"
+        >
+      </a>
 
     <!-- Toggler -->
     <button
@@ -312,9 +328,9 @@ body{ background:#f5f5f5; }
           <a class="nav-link" href="profile.php">Profile</a>
         </li>
 
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link" href="orders.php">Orders</a>
-        </li>
+        </li> -->
 
       </ul>
 
@@ -435,7 +451,7 @@ body{ background:#f5f5f5; }
 <?php endif; ?>
 <!-- MOBILE BAR -->
 <div class="mobile-checkout d-lg-6 gap-4">
-  <a href="product.php" class="btn btn-outline-dark w-50 <?php if ($cartItems): ?>w-100<?php endif; ?>">
+  <a href="product.php" class="btn btn-outline-dark <?php if ($cartItems): ?>w-50 <?php else: ?>w-100 <?php endif; ?>">
           <i class="bi bi-arrow-left"></i>
   </a>
   <?php if ($cartItems): ?>

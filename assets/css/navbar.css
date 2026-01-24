@@ -5,7 +5,7 @@
     body {
       padding-top: 64px;
     }
-  
+
     .editorial-nav {
       padding: 0.5rem 0;
       background: #FAF8F5;
@@ -22,7 +22,7 @@
       padding: 1.5rem 1rem 2rem;
       border-top: 1px solid #E6E3DD;
   
-      box-shadow: 0 20px 40px rgba(0,0,0,.08);
+      /* box-shadow: 0 20px 40px rgba(0,0,0,.08); */
     }
   
     /* Nav list */

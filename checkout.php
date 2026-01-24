@@ -258,7 +258,18 @@ body{
     grid-template-columns:1fr;
   }
 }
+.brand-logo{
+      height: 40px;        /* desktop size */
+      width: auto;
+      object-fit: contain;
+    }
 
+    /* Mobile tweak */
+    @media (max-width: 768px){
+      .brand-logo{
+        height: 32px;
+      }
+    }
 </style>
 </head>
 
@@ -267,10 +278,14 @@ body{
 <nav class="navbar w navbar-expand-lg editorial-nav fixed-top">
   <div class="container-fluid px-4">
 
-    <!-- Brand -->
-    <a class="navbar-brand" href="#">
-      BMS
-    </a>
+   <!-- Brand -->
+      <a class="navbar-brand d-flex align-items-center" href="index.php">
+        <img 
+          src="assets/images/logo.png" 
+          alt="Beauty Multi-Service Logo"
+          class="brand-logo"
+        >
+      </a>
 
     <!-- Toggler -->
     <button
@@ -293,11 +308,11 @@ body{
         <li class="nav-item position-relative">
           <a class="nav-link" href="cart.php">
             <span class="bi bi-cart3">Cart</span>
-            <span
+            <!-- <span
               class="badge rounded-pill bg-danger position-absolute top-0 start-100 translate-middle"
             >
               3
-            </span>
+            </span> -->
           </a>
         </li>
 

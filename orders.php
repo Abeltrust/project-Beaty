@@ -57,6 +57,18 @@ body{
   border: 2px var(--brand);
   border: 1px solid #000;
 }
+.brand-logo{
+      height: 40px;        /* desktop size */
+      width: auto;
+      object-fit: contain;
+    }
+
+    /* Mobile tweak */
+    @media (max-width: 768px){
+      .brand-logo{
+        height: 32px;
+      }
+    }
 </style>
 </head>
 
@@ -65,10 +77,14 @@ body{
 <nav class="navbar w navbar-expand-lg editorial-nav fixed-top">
   <div class="container-fluid px-4">
 
-    <!-- Brand -->
-    <a class="navbar-brand" href="#">
-      BMS
-    </a>
+     <!-- Brand -->
+      <a class="navbar-brand d-flex align-items-center" href="index.php">
+        <img 
+          src="assets/images/logo.png" 
+          alt="Beauty Multi-Service Logo"
+          class="brand-logo"
+        >
+      </a>
 
     <!-- Toggler -->
     <button

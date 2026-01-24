@@ -9,8 +9,12 @@ if (session_status() === PHP_SESSION_NONE) {
     <div class="container-fluid px-4">
   
       <!-- Brand -->
-      <a class="navbar-brand" href="#">
-        BMS
+      <a class="navbar-brand d-flex align-items-center" href="index.php">
+        <img 
+          src="assets/images/logo.png" 
+          alt="Beauty Multi-Service Logo"
+          class="brand-logo"
+        >
       </a>
   
       <!-- Toggler -->

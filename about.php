@@ -27,7 +27,18 @@
     @media(max-width:991px){
       body{ padding-top:64px; }
     }
+.brand-logo{
+      height: 40px;        /* desktop size */
+      width: auto;
+      object-fit: contain;
+    }
 
+    /* Mobile tweak */
+    @media (max-width: 768px){
+      .brand-logo{
+        height: 32px;
+      }
+    }
     /* HERO */
     .about-hero{
       background:
@@ -122,9 +133,9 @@
   <section class="about-hero ">
     <h1>About Beauty Multi-Service</h1>
     <p class="mt-2">
-      We are a premium interior materials company dedicated to supplying
-      high-quality tiles, finishes, and building solutions that transform
-      spaces into timeless works of beauty.
+      We are a premium dealer and distributor of CDK Porcelain, 
+      committed to supplying high-quality tiles, finishes, and building solutions that 
+      transform spaces into timeless works of beauty.
     </p>
   </section>
 
@@ -214,7 +225,7 @@
             Browse Products
         </a>
 
-        <a href="https://wa.me/2347043079022" class="btn btn-outline-dark ">
+        <a href="contact.php" class="btn btn-outline-dark ">
             Talk to Us
         </a>
       </div>

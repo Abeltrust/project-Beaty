@@ -114,7 +114,18 @@
   }
 }
 
+.brand-logo{
+      height: 40px;        /* desktop size */
+      width: auto;
+      object-fit: contain;
+    }
 
+    /* Mobile tweak */
+    @media (max-width: 768px){
+      .brand-logo{
+        height: 32px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -145,7 +156,7 @@
             <div>
               <h6>Our Location</h6>
               <p class="text-muted mb-0">
-                Lagos, Nigeria
+                Port Harcourt, Nigeria
               </p>
             </div>
           </div>
@@ -155,7 +166,7 @@
             <div>
               <h6>Phone</h6>
               <p class="text-muted mb-0">
-                +234 704 307 9022
+                +2348065500623
               </p>
             </div>
           </div>
@@ -165,7 +176,7 @@
             <div>
               <h6>Email</h6>
               <p class="text-muted mb-0">
-                support@beautymultiservice.com
+                info@beautymultiservice.com.ng
               </p>
             </div>
           </div>
@@ -175,7 +186,7 @@
             <div>
               <h6>WhatsApp</h6>
               <a
-                href="https://wa.me/2347043079022"
+                href="https://wa.me/2348065500623"
                 target="_blank"
                 class="text-decoration-none"
               >
@@ -188,15 +199,15 @@
           <div class="mt-4">
             <h6 class="mb-3">Follow Us</h6>
             <div class="d-flex gap-3">
-              <a href="https://facebook.com/beautymultiservice" target="_blank" class="text-decoration-none">
+              <a href="https://facebook.com/chinedu.ezeh.3139" target="_blank" class="text-decoration-none">
                 <i class="bi bi-facebook fs-4 text-primary"></i>
               </a>
-              <a href="mailto:support@beautymultiservice.com" class="text-decoration-none">
+              <a href="mailto:info@beautymultiservice.com.ng" class="text-decoration-none">
                 <i class="bi bi-envelope fs-4 text-danger"></i>
               </a>
-              <a href="https://linkedin.com/company/beautymultiservice" target="_blank" class="text-decoration-none">
+              <!-- <a href="https://linkedin.com/company/beautymultiservice" target="_blank" class="text-decoration-none">
                 <i class="bi bi-linkedin fs-4 text-info"></i>
-              </a>
+              </a> -->
               <a href="https://instagram.com/beautymultiservice" target="_blank" class="text-decoration-none">
                 <i class="bi bi-instagram fs-4 text-warning"></i>
               </a>
@@ -261,7 +272,7 @@
         Reach us directly on WhatsApp for fast responses and product inquiries.
       </p>
 
-      <a href="https://wa.me/2347043079022" target="_blank" class="btn btn-success">
+      <a href="https://wa.me/2348065500623" target="_blank" class="btn btn-success">
         <i class="bi bi-whatsapp me-1"></i> Chat on WhatsApp
       </a>
     </div>
