@@ -136,7 +136,7 @@ body{ background:#f5f5f5; }
 .price-unit{ font-size:.8rem; color:#888; }
 
 /* QTY */
-.qty-control{
+ .qty-control{
   display:flex;
   border:1px solid #ddd;
   border-radius:999px;
@@ -145,6 +145,7 @@ body{ background:#f5f5f5; }
 .qty-control button{
   background:none;
   border:none;
+  align-items:center;
   padding:.15rem .6rem;
   font-weight:700;
   color:var(--brand);
@@ -153,6 +154,26 @@ body{ background:#f5f5f5; }
   padding:0 .6rem;
   font-size:.8rem;
   font-weight:600;
+} 
+.qty-delete-group{
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  flex-shrink: 0;
+}
+
+.cart-meta{
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+}
+
+.qty-control{
+  flex-shrink: 0;
+}
+
+.remove-icon{
+  flex-shrink: 0;
 }
 
 /* DELETE */
@@ -336,24 +357,26 @@ body{ background:#f5f5f5; }
                 <p class="cart-desc">
                   <?= htmlspecialchars($item['description']) ?>
                 </p>
-                <div class="cart-meta">
-                  <span class="price-unit">₦<?= number_format($item['price']) ?> / unit</span>
-                  <div class="qty-control">
-                      <!-- DECREASE -->
-                      <form method="post">
-                        <input type="hidden" name="decrease" value="<?= $item['cart_id'] ?>">
-                        <button type="submit">−</button>
-                      </form>
+              <div class="cart-meta">
+                <span class="price-unit">₦<?= number_format($item['price']) ?> / unit</span>
 
-                      <span><?= $item['quantity'] ?></span>
+                <div class="qty-delete-group">
+                  <div class="qty-control align-items-center">
+                    <!-- DECREASE -->
+                    <form method="post">
+                      <input type="hidden" name="decrease" value="<?= $item['cart_id'] ?>">
+                      <button type="submit">−</button>
+                    </form>
 
-                      <!-- INCREASE -->
-                      <form method="post">
-                        <input type="hidden" name="increase" value="<?= $item['cart_id'] ?>">
-                        <button type="submit">+</button>
-                      </form>
+                    <span><?= $item['quantity'] ?></span>
 
-                    </div>
+                    <!-- INCREASE -->
+                    <form method="post">
+                      <input type="hidden" name="increase" value="<?= $item['cart_id'] ?>">
+                      <button type="submit">+</button>
+                    </form>
+                  </div>
+
                   <button
                     type="button"
                     class="btn btn-link remove-icon p-0"
@@ -364,6 +387,8 @@ body{ background:#f5f5f5; }
                     <i class="bi bi-trash3"></i>
                   </button>
                 </div>
+              </div>
+
               </div>
               <div class="cart-total">
                 ₦<?= number_format($item['price'] * $item['quantity']) ?>

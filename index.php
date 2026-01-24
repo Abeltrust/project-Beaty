@@ -62,6 +62,13 @@
       transform: translateY(-2px);
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
     }
+    html, body {
+  overflow-x: hidden;
+  width: 100%;
+}
+.product-card{
+    margin-left: 2rem;
+}
   </style>
   
 </head>
@@ -116,8 +123,9 @@
 
 <!-- ================= HERO ================= -->
 <section class="hero">
-  <div class="container">
-    <h1>Premium Tiles & Interior Finishes</h1>
+  <div class="container col-sm-10 col-md-8 text-center">
+    <h1>Beauty Multi-Service</h1>
+    <h3>Premium Tiles & Interior Finishes</h3>
     <p>
       We supply high-quality Spanish and Italian tiles, luxury interior materials,
       and modern building solutions designed to transform spaces.
