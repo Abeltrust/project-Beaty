@@ -68,34 +68,35 @@ body{
   font-size: 1.1rem;
 }
 
-.orders-section{
-  margin-top: 2rem;
-}
-
 .order-card{
   background:#fff;
   border-radius:16px;
-  padding:1.5rem;
-  box-shadow:0 8px 20px rgba(0,0,0,.06);
-  margin-bottom:1rem;
-  border-left: 5px solid var(--brand);
+  padding:1rem;
+  box-shadow:0 10px 25px rgba(0,0,0,.08);
+  cursor:pointer;
+  transition:.25s ease;
+  border:1px solid #eee;
 }
 
-.order-card h5{
-  color: var(--brand);
-  margin-bottom: 0.5rem;
+.order-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 18px 40px rgba(0,0,0,.12);
 }
 
-.order-details {
-  background: #f8f9fa;
-  padding: 0.75rem;
-  border-radius: 6px;
-  margin-top: 0.5rem;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  font-size: 0.9rem;
-  line-height: 1.4;
+.order-id{
+  font-weight:600;
 }
+
+.order-meta{
+  font-size:.85rem;
+  color:#777;
+}
+
+.order-total{
+  font-weight:600;
+  color:#c79a3d;
+}
+
 
 .btn-primary-custom{
   color:#000;
@@ -126,30 +127,6 @@ body{
     font-size: 1rem;
   }
   
-  .order-card {
-    padding: 1rem;
-    margin-bottom: 0.75rem;
-  }
-  
-  .order-card h5 {
-    font-size: 1.1rem;
-    margin-bottom: 0.25rem;
-  }
-  
-  .orders-section h4 {
-    font-size: 1.2rem;
-  }
-  
-  .order-details {
-    font-size: 0.9rem;
-    line-height: 1.4;
-    background: #f8f9fa;
-    padding: 0.5rem;
-    border-radius: 6px;
-    margin-top: 0.5rem;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-  }
 }
 .brand-logo{
       height: 40px;        /* desktop size */
@@ -224,7 +201,10 @@ body{
 
       <!-- Actions -->
       <div class="nav-actions d-flex flex-column flex-lg-row gap-2 mt-4 mt-lg-0">
-        <a class="btn btn-auth1" href="auth/logout.php">Logout</a>
+        <?php if ($_SESSION['role'] === 'user'): ?>
+            <a class="btn btn-auth ms-lg-3" href="auth/logout.php">Logout</a>
+        <?php endif; ?>  
+        <a class="btn btn-auth1" href="auth/logout.php">Logout</a>`
       </div>
     </div>
 
@@ -241,28 +221,76 @@ body{
       <p><strong>Email:</strong> <?= htmlspecialchars($user['email']) ?></p>
     </div>
 
-    <div class="orders-section">
-      <h4 class="mb-3"><i class="bi bi-receipt me-2"></i>Order History</h4>
-      <?php if (empty($orders)): ?>
-        <div class="text-center py-4">
-          <i class="bi bi-cart-x fs-1 text-muted"></i>
-          <p class="text-muted mt-2">No orders yet. Start shopping!</p>
-          <a href="product.php" class="btn btn-primary-custom">Browse Products</a>
+    <?php 
+    $totalOrders = count($orders);
+    $sn = $totalOrders;
+    ?>
+    <h3 class="mb-4">My Orders (<?= $totalOrders ?>)</h3>
+    <div class="row g-4">
+   <?php foreach ($orders as $order): ?>
+    <?php $displayCode = "BMS-" . str_pad($sn, 3, "0", STR_PAD_LEFT); ?>
+    <div class="order-card"
+      data-id="<?= $displayCode ?>"
+      data-total="<?= number_format($order['total'],2) ?>"
+      data-date="<?= date('F j, Y, g:i a', strtotime($order['created_at'])) ?>"
+      data-items="<?= htmlspecialchars($order['order_details']) ?>"
+      onclick="openOrderModal(this)">
+
+    <div class="d-flex justify-content-between align-items-center">
+      <div>
+        <div class="order-id">Order <?= $displayCode ?></div>
+        <div class="order-meta">
+          <?= date('F j, Y, g:i a', strtotime($order['created_at'])) ?>
         </div>
-      <?php else: ?>
-        <?php foreach ($orders as $order): ?>
-          <div class="order-card">
-            <h5>Order #<?= $order['id'] ?></h5>
-            <p><strong>Total:</strong> $<?= number_format($order['total'], 2) ?></p>
-            <p><strong>Date:</strong> <?= date('F j, Y, g:i a', strtotime($order['created_at'])) ?></p>
-            <p><strong>Items:</strong></p>
-            <pre class="order-details"><?= htmlspecialchars($order['order_details']) ?></pre>
-          </div>
-        <?php endforeach; ?>
-      <?php endif; ?>
+      </div>
+
+      <div class="order-total">
+        ₦<?= number_format($order['total'],2) ?>
+      </div>
     </div>
   </div>
+  <?php $sn--; endforeach; ?>
+  <?php if ($totalOrders == 0): ?>
+    <div class="text-center mt-4">
+      <p class="text-muted">You have no orders yet.</p>
+    </div>
+  <?php endif; ?>
+  </div>
 </div>
+
+<div class="modal fade" id="orderModal" tabindex="-1">
+ <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content rounded-4">
+
+   <div class="modal-header">
+     <h5 class="modal-title">Order Details</h5>
+     <button class="btn-close" data-bs-dismiss="modal"></button>
+   </div>
+
+   <div class="modal-body">
+     <p><strong>Order ID:</strong> <span id="mOrderId"></span></p>
+     <p><strong>Date:</strong> <span id="mOrderDate"></span></p>
+     <p><strong>Total:</strong> ₦<span id="mOrderTotal"></span></p>
+     <hr>
+     <pre id="mOrderItems" style="white-space:pre-wrap;"></pre>
+   </div>
+
+  </div>
+ </div>
+</div>
+<script>
+function openOrderModal(card){
+
+  document.getElementById("mOrderId").innerText = card.dataset.id;
+  document.getElementById("mOrderDate").innerText = card.dataset.date;
+  document.getElementById("mOrderTotal").innerText = card.dataset.total;
+  document.getElementById("mOrderItems").innerText = card.dataset.items;
+
+  new bootstrap.Modal(
+    document.getElementById("orderModal")
+  ).show();
+}
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>

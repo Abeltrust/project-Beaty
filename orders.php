@@ -130,7 +130,14 @@ body{
 
       <!-- Actions -->
       <div class="nav-actions d-flex flex-column flex-lg-row gap-2 mt-4 mt-lg-0">
-        <a class="btn btn-auth1" href="auth/logout.php">Logout</a>
+        <?php if ($_SESSION['role'] === 'admin'): ?>
+              <a class="btn btn-auth ms-lg-3" href="admin/dashboard.php">Admin Dashboard</a>
+               <a href="auth/logout.php" class="btn btn-outline-danger ms-lg-3">
+                <i class="bi bi-box-arrow-right"></i> Logout
+              </a>
+            <?php elseif ($_SESSION['role'] === 'user'): ?>
+              <a class="btn btn-auth s-lg-2" href="auth/logout.php">Logout</a>
+        <?php endif; ?>  
       </div>
     </div>
 

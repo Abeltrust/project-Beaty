@@ -38,12 +38,12 @@ if (!empty($_POST)) {
     ]);
 
     // Send verification email (for development, display link instead)
-    // $subject = "Verify Your Email - Beauty Multi-Service";
-    // $message = "Hi " . htmlspecialchars($_POST['name']) . ",\n\nPlease verify your email by clicking the link: http://localhost/project-Beaty/auth/verify.php?token=" . $token;
-    // $headers = "From: noreply@beautymultiservice.com";
-    // mail($_POST['email'], $subject, $message, $headers);
+    $subject = "Verify Your Email - Beauty Multi-Service";
+    $message = "Hi " . htmlspecialchars($_POST['name']) . ",\n\nPlease verify your email by clicking the link: http://localhost/project-Beaty/auth/verify.php?token=" . $token;
+    $headers = "From: noreply@beautymultiservice.com";
+    mail($_POST['email'], $subject, $message, $headers);
 
-    $success = "Registration successful! Please verify your email by clicking this link: <a href='http://localhost/project-Beaty/auth/verify.php?token=" . $token . "'>Verify Email</a>";
+    // $success = "Registration successful! Please verify your email by clicking this link: <a href='http://localhost/project-Beaty/auth/verify.php?token=" . $token . "'>Verify Email</a>";
   }
 }
 ?>

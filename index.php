@@ -126,20 +126,22 @@
           <li class="nav-item"><a class="nav-link" href="contact.php">Contact</a></li>
           <li class="nav-item"><a class="nav-link" href="about.php">About</a></li>
         </ul>
-       <?php if (isset($_SESSION['user_id'])): ?>
-        <?php if ($_SESSION['role'] === 'admin'): ?>
-              <a class="btn btn-auth ms-lg-3" href="admin/dashboard.php">Admin Dashboard</a>
-        <?php endif; ?>
-      <?php endif; ?>
 
         <!-- Actions -->
         <div class="nav-actions d-flex flex-column flex-lg-row gap-2 mt-4 mt-lg-0">
-        <?php if (isset($_SESSION['user_id'])): ?>
+       <?php if (isset($_SESSION['user_id'])): ?>
+        <?php if ($_SESSION['role'] === 'admin'): ?>
+              <a class="btn btn-auth ms-lg-3" href="admin/dashboard.php">Admin Dashboard</a>
+               <a href="auth/logout.php" class="btn btn-outline-danger ms-lg-3">
+                <i class="bi bi-box-arrow-right"></i> Logout
+              </a>
+        <?php elseif ($_SESSION['role'] === 'user'): ?>
             <a class="btn btn-auth ms-lg-3" href="auth/logout.php">Logout</a>
         <?php else: ?>  
             <a class="btn btn-auth ms-lg-3" href="auth/login.php">Login</a>
             <a class="btn btn-auth ms-lg-2" href="auth/register.php">Sign Up</a>    
-          <?php endif; ?>                      
+        <?php endif; ?>       
+         <?php endif; ?>                   
         </div>
       </div>
   
@@ -193,7 +195,7 @@
 <div class="row g-4">
   <div class="col-12 col-md-4">
       <div class="card product-card">
-        <img src="https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf" alt="">
+        <img src="assets/images/luxury.png" alt="Luxury Floor Tiles">
         <div class="card-body text-center">
           <h5>Luxury Floor Tiles</h5>
           <p class="text-muted small">Premium imported floor tiles</p>
@@ -206,7 +208,7 @@
   
    <div class="col-12 col-md-4">
       <div class="card product-card">
-        <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6" alt="">
+        <img src="assets/images/wall.png" alt="Wall & Interior Tiles">
         <div class="card-body text-center">
           <h5>Wall & Interior Tiles</h5>
           <p class="text-muted small">Modern wall finishing solutions</p>
@@ -219,7 +221,7 @@
   
    <div class="col-12 col-md-4">
       <div class="card product-card">
-        <img src="https://images.unsplash.com/photo-1604014237800-1c9102c219da" alt="">
+        <img src="assets/images/exterior.png" alt="Exterior Finishes">
         <div class="card-body text-center">
           <h5>Exterior Finishes</h5>
           <p class="text-muted small">Strong & weather-resistant designs</p>

@@ -9,6 +9,16 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 $userId = $_SESSION['user_id'];
+/* ================= CLEAR CART AFTER CONFIRM ================= */
+if(isset($_POST['process_order'])){
+
+  $delCart = $pdo->prepare("DELETE FROM cart WHERE user_id=?");
+  $delCart->execute([$userId]);
+
+  header("Location: product.php");
+  exit;
+}
+
 
 /* ================= UPDATE CART QUANTITY ================= */
 if (isset($_POST['update_cart'])) {
@@ -331,7 +341,14 @@ body{
 
       <!-- Actions -->
       <div class="nav-actions d-flex flex-column flex-lg-row gap-2 mt-4 mt-lg-0">
-        <a class="btn btn-auth s-lg-2" href="auth/logout.php">Logout</a>
+         <?php if ($_SESSION['role'] === 'admin'): ?>
+              <a class="btn btn-auth ms-lg-3" href="admin/dashboard.php">Admin Dashboard</a>
+               <a href="auth/logout.php" class="btn btn-outline-danger ms-lg-3">
+                <i class="bi bi-box-arrow-right"></i> Logout
+              </a>
+            <?php elseif ($_SESSION['role'] === 'user'): ?>
+              <a class="btn btn-auth s-lg-2" href="auth/logout.php">Logout</a>
+        <?php endif; ?>  
       </div>
     </div>
 
@@ -408,12 +425,14 @@ body{
   </form>
 
 </div>
-<div class="checkout-actions">
+<!-- <div class="checkout-actions">
 
-  <a href="<?= $wa ?>" target="_blank" class="btn btn-whatsapp">
-    <i class="bi bi-whatsapp"></i>
-    Send Order via WhatsApp
-  </a>
+  <form method="post" action="<?= $wa ?>" target="_blank">
+    <button type="submit" name="complete_checkout" onclick="return confirm('Confirm checkout and clear cart?')" class="btn btn-whatsapp w-100">
+      <i class="bi bi-whatsapp"></i>
+      Send Order via WhatsApp
+    </button>
+  </form>
 
   <a href="mailto:beautymultiservice@gmail.com
      ?subject=New Order #<?= $orderId ?>
@@ -423,7 +442,86 @@ body{
     Send Order via Email
   </a>
 
+</div> -->
+<div class="checkout-actions">
+
+  <!-- WhatsApp -->
+  <button 
+    type="button" 
+    class="btn btn-whatsapp w-100"
+    onclick="openConfirmModal('whatsapp')"
+  >
+    <i class="bi bi-whatsapp"></i>
+    Send Order via WhatsApp
+  </button>
+
+  <!-- Email -->
+  <button 
+    type="button" 
+    class="btn btn-email"
+    onclick="openConfirmModal('email')"
+  >
+    <i class="bi bi-envelope"></i>
+    Send Order via Email
+  </button>
+
 </div>
+<div class="modal fade" id="confirmOrderModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Confirm Checkout</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body text-center">
+        <p>Confirm order and clear your cart?</p>
+      </div>
+
+      <div class="modal-footer">
+
+        <button class="btn btn-outline-secondary" data-bs-dismiss="modal">
+          Cancel
+        </button>
+
+        <form method="post" id="processForm">
+          <input type="hidden" name="process_order" value="1">
+          <button type="submit" class="btn btn-dark">
+            Yes, Continue
+          </button>
+        </form>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+<script>
+let selectedMethod = '';
+
+function openConfirmModal(type){
+  selectedMethod = type;
+  new bootstrap.Modal(
+    document.getElementById('confirmOrderModal')
+  ).show();
+}
+
+document.getElementById('processForm').addEventListener('submit', function(){
+
+  if(selectedMethod === 'whatsapp'){
+    window.open("<?= $wa ?>","_blank");
+  }
+
+  if(selectedMethod === 'email'){
+    window.location.href = "mailto:beautymultiservice@gmail.com"+
+      "?subject=New Order #<?= $orderId ?>"+
+      "&body=<?= urlencode($orderText . "\nTotal: ₦" . $total) ?>";
+  }
+
+});
+</script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

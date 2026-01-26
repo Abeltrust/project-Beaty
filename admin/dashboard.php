@@ -73,9 +73,12 @@ $totalUsers = $pdo->query("SELECT COUNT(*) FROM users")->fetchColumn();
         </ul>
   
         <!-- Actions -->
-        <div class="nav-actions d-flex flex-column flex-lg-row gap-2 mt-4 mt-lg-0">
-            <a class="btn btn-auth ms-lg-2" href="logout.php">Logout</a>                      
-        </div>
+        <!-- <div class="nav-actions d-flex flex-column flex-lg-row gap-2 mt-4 mt-lg-0">
+            <a class="btn btn-auth ms-lg-2" href="../auth/logout.php">Logout</a>                      
+        </div> -->
+          <a href="../auth/logout.php" class="btn btn-outline-danger nav-actions d-flex flex-column flex-lg-row gap-2 mt-4 mt-lg-0">
+            <i class="bi bi-box-arrow-right"></i> Logout
+          </a>
       </div>
   
     </div>
@@ -83,12 +86,9 @@ $totalUsers = $pdo->query("SELECT COUNT(*) FROM users")->fetchColumn();
 <div class="container py-5">
 
   <!-- HEADER -->
-  <div class="d-flex justify-content-between align-items-center mb-4">
+  <!-- <div class="d-flex justify-content-between align-items-center mb-4">
     <h3>Admin</h3>
-    <a href="../auth/logout.php" class="btn btn-outline-danger">
-      <i class="bi bi-box-arrow-right"></i> Logout
-    </a>
-  </div>
+  </div> -->
 
   <!-- STATS -->
   <div class="row g-4 mb-5">
@@ -122,19 +122,19 @@ $totalUsers = $pdo->query("SELECT COUNT(*) FROM users")->fetchColumn();
   <!-- ACTIONS -->
   <div class="row g-4">
 
-    <div class="col-md-6">
+    <div class="col-md-10 mx-auto">
       <a href="add-product.php" class="card stat-card p-4 text-decoration-none text-dark">
-        <h5><i class="bi bi-plus-circle"></i> Add Product</h5>
+        <h5><i class="bi bi-plus-circle"></i> Add Product / Manage Products</h5>
         <p class="text-muted mb-0">Create new products for the store</p>
       </a>
     </div>
 
-    <div class="col-md-6">
+    <!-- <div class="col-md-6">
       <a href="add-product.php" class="card stat-card p-4 text-decoration-none text-dark">
         <h5><i class="bi bi-box-seam"></i> Manage Products</h5>
         <p class="text-muted mb-0">Edit or review existing products</p>
       </a>
-    </div>
+    </div> -->
 
   </div>
 

@@ -29,9 +29,9 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
       /* Dev Mode Reset Link */
       $link = "http://localhost/project-Beaty/auth/reset-password.php?token=".$token;
 
-      $msg = "Reset link (dev mode): <a href='$link'>Reset Password</a>";
-    //   mail($email,"Password Reset","Click here: $link");
-    //   $msg = "Password reset link sent to your email.";   
+    //   $msg = "Reset link (dev mode): <a href='$link'>Reset Password</a>";
+      mail($email,"Password Reset","Click here: $link");
+      $msg = "Password reset link sent to your email.";   
 
 
     } else {
