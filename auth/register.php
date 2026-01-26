@@ -10,13 +10,18 @@ if (isset($_SESSION['user_id'])) {
 $error = "";
 
 if (!empty($_POST)) {
+  // Check password match
+    if ($_POST['password'] !== $_POST['confirm_password']) {
+      $error = "Passwords do not match.";
+    }
+
   // Check if email already exists
   $check = $pdo->prepare("SELECT id FROM users WHERE email = ?");
   $check->execute([$_POST['email']]);
 
-  if ($check->fetch()) {
-    $error = "An account with this email already exists.";
-  } else {
+  if  (!$error && $check->fetch()) {
+      $error = "An account with this email already exists.";
+    } elseif(!$error) {
     // Generate verification token
     $token = bin2hex(random_bytes(32));
 
@@ -285,6 +290,14 @@ body {
       placeholder="Password"
       required
     >
+    <input
+      class="form-control mb-3"
+      name="confirm_password"
+      type="password"
+      placeholder="Confirm Password"
+      required
+    >
+
 
     <button class="btn btn-register w-100">
       Create Account

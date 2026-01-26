@@ -251,12 +251,17 @@ body {
       Login
     </button>
   </form>
-    <div class="form-check mb-3">
-    <input class="form-check-input" type="checkbox" name="remember">
-    <label class="form-check-label">
-        Remember me
-    </label>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="remember">
+        <label class="form-check-label">Remember me</label>
+      </div>
+
+      <a href="forgot-password.php" style="font-size:.85rem; color:#c79a3d;">
+        Forgot password?
+      </a>
     </div>
+
 
     <div class="login-footer">
         Don’t have an account?
