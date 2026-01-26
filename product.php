@@ -487,6 +487,7 @@ body{
     <img id="mImg" class="img-fluid rounded mb-3">
     <h5 id="mName"></h5>
     <p class="fw-bold text-warning">₦<span id="mPrice"></span></p>
+    <p id="mDescription" class="text-muted small"></p>
     <form method="post">
       <input type="hidden" name="product_id" id="mProductId">
       <button type="submit" name="add_to_cart" class="btn btn-dark w-100">
@@ -525,9 +526,10 @@ function filter(){
 document.getElementById('quickView').addEventListener('show.bs.modal', e => {
   const c = e.relatedTarget;
   mName.innerText = c.dataset.name;
-  mPrice.innerText = c.dataset.price;
-  mImg.src = c.dataset.image;
-  document.getElementById('mProductId').value = c.dataset.id;
+mPrice.innerText = c.dataset.price;
+mImg.src = c.dataset.image;
+mDescription.innerText = c.dataset.description;
+document.getElementById('mProductId').value = c.dataset.id;
 });
 
 </script>

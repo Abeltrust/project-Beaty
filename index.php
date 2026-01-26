@@ -81,7 +81,10 @@
         height: 32px;
       }
     }
-    
+    .nowrap-title{
+  white-space: nowrap;
+}
+
   </style>
   
 </head>
@@ -141,8 +144,8 @@
 
 <!-- ================= HERO ================= -->
 <section class="hero">
-  <div class="container col-sm-10 col-md-8 text-center">
-    <h1>Beauty Multi-Service</h1>
+  <div class="container text-center" style="max-width:700px">
+    <h1 class="nowrap-title">Beauty Multi-Service</h1>
     <h3>Premium Tiles & Interior Finishes</h3>
     <p>
       We supply high-quality Spanish and Italian tiles, luxury interior materials,

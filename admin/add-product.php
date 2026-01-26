@@ -48,14 +48,41 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
   }
 
+  // if (isset($_POST['delete_id'])) {
+  //   $id = intval($_POST['delete_id']);
+  //   $stmt = $pdo->prepare("DELETE FROM products WHERE id = ?");
+  //   $stmt->execute([$id]);
+  //   $success = "Product deleted successfully.";
+  //   header("Location: add-product.php");
+  //   exit;
+  // }
+
   if (isset($_POST['delete_id'])) {
-    $id = intval($_POST['delete_id']);
+
+  $id = intval($_POST['delete_id']);
+
+  try {
+
+    // Remove product from carts first (avoid foreign key crash)
+    $clear = $pdo->prepare("DELETE FROM cart WHERE product_id = ?");
+    $clear->execute([$id]);
+
+    // Now delete product
     $stmt = $pdo->prepare("DELETE FROM products WHERE id = ?");
     $stmt->execute([$id]);
+
     $success = "Product deleted successfully.";
     header("Location: add-product.php");
     exit;
+
+  } catch (PDOException $e) {
+
+    $error = "Delete failed.";
+    header("Location: add-product.php");
+    exit;
   }
+}
+
 
   // Add product logic
   $name  = trim($_POST['name']);
