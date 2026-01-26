@@ -126,7 +126,12 @@
           <li class="nav-item"><a class="nav-link" href="contact.php">Contact</a></li>
           <li class="nav-item"><a class="nav-link" href="about.php">About</a></li>
         </ul>
-  
+       <?php if (isset($_SESSION['user_id'])): ?>
+        <?php if ($_SESSION['role'] === 'admin'): ?>
+              <a class="btn btn-auth ms-lg-3" href="admin/dashboard.php">Admin Dashboard</a>
+        <?php endif; ?>
+      <?php endif; ?>
+
         <!-- Actions -->
         <div class="nav-actions d-flex flex-column flex-lg-row gap-2 mt-4 mt-lg-0">
         <?php if (isset($_SESSION['user_id'])): ?>

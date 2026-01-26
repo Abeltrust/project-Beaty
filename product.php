@@ -72,6 +72,7 @@ body{
   font-family:'Poppins',sans-serif;
   padding-top:90px;
 }
+
 .brand-logo{
       height: 40px;        /* desktop size */
       width: auto;
@@ -287,6 +288,24 @@ body{
   font-size:2.4rem;
   color:var(--brand);
 }
+/* MOBILE FILTER SIZE */
+@media (max-width: 768px) {
+
+  .filter-bar{
+    padding: .6rem;
+    border-radius: 12px;
+  }
+
+  .filter-bar .form-control,
+  .filter-bar .form-select{
+    font-size: .75rem;
+    padding: .35rem .5rem;
+    height: 32px;
+  }
+
+}
+
+
 </style>
 </head>
 
@@ -358,11 +377,11 @@ body{
   </div>
 </nav>
 
-<div class="container py-2 mb-5">
+<div class="container py-1 mb-5">
 
-  <div class="text-center cart-header mb-2">
+  <!-- <div class="text-center cart-header mb-2">
      <i class="bi bi-shop"></i>
-  </div>
+  </div> -->
 <!-- FILTER -->
 <div class="filter-bar mb-4">
   <div class="row g-2">
@@ -452,7 +471,7 @@ body{
             data-name="<?= htmlspecialchars($p['name']) ?>"
             data-price="<?= number_format($p['price']) ?>"
             data-image="assets/images/products/<?= htmlspecialchars($p['image']) ?>"
-            data-description="<?= htmlspecialchars($p['description']) ?>"
+           data-description="<?= htmlspecialchars($p['description'], ENT_QUOTES) ?>"
           >
             <i class="bi bi-info-circle"></i>
           </button>
