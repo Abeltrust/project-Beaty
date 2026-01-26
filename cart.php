@@ -337,7 +337,7 @@ body{ background:#f5f5f5; }
      <!-- Actions -->
       <div class="nav-actions d-flex flex-column flex-lg-row gap-2 mt-4 mt-lg-0">
          <?php if ($_SESSION['role'] === 'admin'): ?>
-              <a class="btn btn-auth ms-lg-3" href="admin/dashboard.php">Admin Dashboard</a>
+              <a class="btn btn-auth1 ms-lg-3" href="admin/dashboard.php">Admin Dashboard</a>
                <a href="auth/logout.php" class="btn btn-outline-danger ms-lg-3">
                 <i class="bi bi-box-arrow-right"></i> Logout
               </a>
@@ -350,7 +350,7 @@ body{ background:#f5f5f5; }
   </div>
 </nav>
 
-
+              
 <div class="container py-5 mb-5 cart-wrapper">
 
   <!-- ICON HEADER -->

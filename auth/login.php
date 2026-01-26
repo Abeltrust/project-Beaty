@@ -187,6 +187,24 @@ body {
         height: 32px;
       }
     }
+    /* Remember + Forgot (mobile tuning) */
+@media (max-width:576px){
+  .login-options{
+    gap: .5rem;
+  }
+
+  .login-options label,
+  .login-options a{
+    font-size: .75rem;
+  }
+}
+@media (max-width:400px){
+  .login-options label,
+  .login-options a{
+    font-size: .7rem;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -196,7 +214,7 @@ body {
     <div class="container-fluid px-4">
   
        <!-- Brand -->
-      <a class="navbar-brand d-flex align-items-center" href="index.php">
+      <a class="navbar-brand d-flex align-items-center" href="../index.php">
         <img 
           src="../assets/images/logo.png" 
           alt="Beauty Multi-Service Logo"
@@ -251,7 +269,7 @@ body {
       Login
     </button>
   </form>
-    <div class="d-flex justify-content-between align-items-center mb-3">
+   <div class="d-flex justify-content-between align-items-center mb-2 mt-2 login-options">
       <div class="form-check">
         <input class="form-check-input" type="checkbox" name="remember">
         <label class="form-check-label">Remember me</label>

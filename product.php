@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
 
 
 
-$products = $pdo->query("SELECT * FROM products ORDER BY created_at DESC")->fetchAll();
+$products = $pdo->query("SELECT *, (created_at >= NOW() - INTERVAL 7 DAY) AS is_new FROM products ORDER BY created_at DESC")->fetchAll();
 
 // Fetch cart data
 $cartStmt = $pdo->prepare("SELECT COUNT(cart.id) as count, SUM(products.price * cart.quantity) as total FROM cart JOIN products ON cart.product_id = products.id WHERE cart.user_id = ?");
@@ -73,19 +73,17 @@ body{
   padding-top:90px;
 }
 
+/* ================= LOGO ================= */
 .brand-logo{
-      height: 40px;        /* desktop size */
-      width: auto;
-      object-fit: contain;
-    }
+  height:40px;
+  width:auto;
+  object-fit:contain;
+}
+@media (max-width:768px){
+  .brand-logo{ height:32px; }
+}
 
-    /* Mobile tweak */
-    @media (max-width: 768px){
-      .brand-logo{
-        height: 32px;
-      }
-    }
-/* FILTER BAR */
+/* ================= FILTER BAR ================= */
 .filter-bar{
   background:#fff;
   padding:1.1rem;
@@ -101,17 +99,10 @@ body{
   overflow:hidden;
   box-shadow:0 12px 30px rgba(0,0,0,.08);
   transition:.25s ease;
-  height:100%;
+  display:flex;
+  flex-direction:column;
 }
 
-/* Desktop = square */
-@media (min-width: 992px){
-  .product-card{
-    aspect-ratio:1 / 1;
-  }
-}
-
-/* Hover (desktop only) */
 @media (hover:hover){
   .product-card:hover{
     transform:translateY(-6px);
@@ -122,49 +113,47 @@ body{
 /* ================= IMAGE ================= */
 .product-img{
   width:100%;
+  height:150px;        /* mobile */
   overflow:hidden;
 }
 
-/* Mobile image height */
 .product-img img{
   width:100%;
-  height:120px;
+  height:100%;
   object-fit:cover;
   transition:.35s ease;
 }
 
-/* Desktop image height */
-@media (min-width: 992px){
-  .product-img img{
-    height:65%;
+@media (min-width:992px){
+  .product-img{
+    height:190px;     /* desktop */
   }
+
   .product-card:hover img{
-    transform:scale(1.08);
+    transform:scale(1.06);
   }
 }
 
 /* ================= BODY ================= */
 .product-body{
-  padding:.63rem .7rem;
+  padding:.65rem .75rem;
   display:flex;
   flex-direction:column;
-  gap:.25rem;
+  gap:.3rem;
+  margin-top:auto;
 }
 
-/* Desktop: side by side */
-@media (min-width: 992px){
+@media (min-width:992px){
   .product-body{
     flex-direction:row;
     align-items:center;
     justify-content:space-between;
   }
-  .product-text{
-    flex:1;
-  }
+  .product-text{ flex:1; }
 }
 
 .product-body h6{
-  font-size:.78rem;
+  font-size:.8rem;
   font-weight:600;
   margin:0;
   line-height:1.3;
@@ -214,7 +203,7 @@ body{
   }
 }
 
-/* ================= QUICK VIEW ================= */
+/* ================= QUICK VIEW OVERLAY ================= */
 .quick-view{
   position:absolute;
   inset:0;
@@ -239,46 +228,55 @@ body{
   font-size:.7rem;
   font-weight:600;
 }
-/* MOBILE */
-@media(max-width:768px){
-  .cart-grid{ grid-template-columns:56px 1fr auto; }
-  .cart-img{ width:56px; height:56px; }
-  .cart-summary-card{ position:static; }
-  #quickView .modal-dialog {
-    max-width: 90%;
+
+/* ================= MOBILE FILTER SIZE ================= */
+@media (max-width:768px){
+  .filter-bar{
+    padding:.6rem;
+    border-radius:12px;
+  }
+
+  .filter-bar .form-control,
+  .filter-bar .form-select{
+    font-size:.75rem;
+    padding:.35rem .5rem;
+    height:32px;
   }
 }
-.mobile-checkout {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: #fff;
-  border-top: 1px solid #eee;
-  padding: .75rem 1rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 999;
+
+/* ================= MOBILE CHECKOUT ================= */
+.mobile-checkout{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:#fff;
+  border-top:1px solid #eee;
+  padding:.75rem 1rem;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  z-index:999;
 }
 
-.mobile-checkout span {
-  font-weight: 600;
+.mobile-checkout span{
+  font-weight:600;
 }
+
 .btn-primary-custom1{
   color:#000;
   background:var(--brand);
-  border: 1px solid #000;
-  border-radius: 50;
+  border:1px solid #000;
   font-weight:300;
-  transition:all 0.25s ease;
+  transition:.25s ease;
 }
+
 .btn-primary-custom1:hover{
   color:#000;
-  border: 2px var(--brand);
-  border: 1px solid #000;
+  border:1px solid #000;
 }
-* HEADER ICON */
+
+/* ================= HEADER ICON ================= */
 .cart-header{
   display:flex;
   justify-content:center;
@@ -288,23 +286,6 @@ body{
   font-size:2.4rem;
   color:var(--brand);
 }
-/* MOBILE FILTER SIZE */
-@media (max-width: 768px) {
-
-  .filter-bar{
-    padding: .6rem;
-    border-radius: 12px;
-  }
-
-  .filter-bar .form-control,
-  .filter-bar .form-select{
-    font-size: .75rem;
-    padding: .35rem .5rem;
-    height: 32px;
-  }
-
-}
-
 
 </style>
 </head>
@@ -421,6 +402,7 @@ body{
   <?php unset($_SESSION['cart_message']); ?>
 <?php endif; ?>
 
+
 <!-- PRODUCTS GRID -->
 <div class="row g-0 g-sm-1 mb-5" id="productGrid">
   <?php foreach ($products as $p): ?>
@@ -430,7 +412,12 @@ body{
        data-price="<?= $p['price'] ?>">
 
     <div class="product-card" data-id="<?= $p['id'] ?>">
-      <span class="badge-new">NEW</span>
+    <?php
+      if($p['is_new']){
+          echo '<span class="badge-new">NEW</span>';
+        }
+              ?>
+
 
       <!-- IMAGE (OPENS MODAL) -->
       <div class="product-img">

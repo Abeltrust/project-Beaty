@@ -137,11 +137,10 @@
               </a>
         <?php elseif ($_SESSION['role'] === 'user'): ?>
             <a class="btn btn-auth ms-lg-3" href="auth/logout.php">Logout</a>
-        <?php else: ?>  
+        <?php endif; ?> 
+       <?php endif; ?>      
             <a class="btn btn-auth ms-lg-3" href="auth/login.php">Login</a>
-            <a class="btn btn-auth ms-lg-2" href="auth/register.php">Sign Up</a>    
-        <?php endif; ?>       
-         <?php endif; ?>                   
+            <a class="btn btn-auth ms-lg-2" href="auth/register.php">Sign Up</a>  
         </div>
       </div>
   

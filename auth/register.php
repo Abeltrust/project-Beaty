@@ -223,7 +223,7 @@ body {
     <div class="container-fluid px-4">
   
       <!-- Brand -->
-      <a class="navbar-brand d-flex align-items-center" href="index.php">
+      <a class="navbar-brand d-flex align-items-center" href="../index.php">
         <img 
           src="../assets/images/logo.png" 
           alt="Beauty Multi-Service Logo"
