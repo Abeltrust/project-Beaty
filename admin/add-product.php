@@ -4,7 +4,7 @@ include "../includes/db.php";
 
 $error = "";
 $success = "";
-
+//jjjhh
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
   if (isset($_POST['update_product'])) {
