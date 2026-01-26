@@ -1,8 +1,8 @@
 <?php
 $host = "localhost";
-$db   = "beauty_db";
-$user = "root";
-$pass = "";
+$db   = "beautyservices_beauty_db";
+$user = "beautyservices_beautyservices";
+$pass = "#X#f}~hR(1?~";
 
 try {
   $pdo = new PDO(
